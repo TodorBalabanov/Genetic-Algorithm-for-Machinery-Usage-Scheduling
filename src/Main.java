@@ -313,31 +313,42 @@ class Job {
 	}
 
 	/**
-	 * Name field getter
+	 * Name field getter.
+	 * 
+	 * @return Job name.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Name field setter
+	 * Name field setter.
+	 * 
+	 * @param name
+	 *            Job name.
+	 * 
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Operation list getter
-	 */
-	public List<Operation> getOperations() {
-		return operations;
-	}
-
-	/**
-	 * Operation list setter
+	 * Operation list setter.
+	 * 
+	 * @param operations
+	 *            The list of operations.
 	 */
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+
+	/**
+	 * Operation list getter.
+	 * 
+	 * @return The list of operations.
+	 */
+	public List<Operation> getOperations() {
+		return operations;
 	}
 }
 
