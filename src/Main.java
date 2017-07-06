@@ -11,17 +11,17 @@ class Machine {
 	/**
 	 * Machine title.
 	 */
-	String name = "";
+	private String name = "";
 
 	/**
 	 * Is machine occupied by particular action flag.
 	 */
-	boolean occupied = false;
+	private boolean occupied = false;
 
 	/**
 	 * Reference to external action object.
 	 */
-	Action action = null;
+	private Action action = null;
 
 	/**
 	 * Constructor with all parameters.
@@ -38,6 +38,31 @@ class Machine {
 		this.occupied = occupied;
 		this.action = action;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public boolean isOccupied() {
+		return occupied;
+	}
+	
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
+	}
+	
+	public Action getAction() {
+		return action;
+	}
+	
+	public void setAction(Action action) {
+		this.action = action;
+	}
+	
 
 	/*
 	 * (non-Javadoc)
