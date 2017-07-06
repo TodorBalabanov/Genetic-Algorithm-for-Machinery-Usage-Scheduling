@@ -36,7 +36,7 @@ class Machine {
 	}
 
 	/**
-	 * Name field getter.
+	 * Name getter.
 	 * 
 	 * @return Name of the machine.
 	 */
@@ -45,7 +45,7 @@ class Machine {
 	}
 
 	/**
-	 * Name field setter.
+	 * Name setter.
 	 * 
 	 * @param name
 	 *            Name of the machine.
@@ -55,16 +55,16 @@ class Machine {
 	}
 
 	/**
-	 * Occupied field getter.
+	 * Occupied flag getter.
 	 * 
-	 * @return Is occupied flag
+	 * @return Is occupied flag.
 	 */
 	public boolean isOccupied() {
 		return occupied;
 	}
 
 	/**
-	 * Occupied field setter.
+	 * Occupied flag setter.
 	 * 
 	 * @param occupied
 	 *            Is machine occupied by action flag.
@@ -74,7 +74,7 @@ class Machine {
 	}
 
 	/**
-	 * Action field getter.
+	 * Action reference getter.
 	 * 
 	 * @return Reference to action object.
 	 */
@@ -83,7 +83,7 @@ class Machine {
 	}
 
 	/**
-	 * Action field setter.
+	 * Action reference setter.
 	 * 
 	 * @param action
 	 *            Reference to external action object.

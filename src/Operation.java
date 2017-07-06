@@ -42,38 +42,36 @@ public class Operation {
 		this.previous = previous;
 	}
 
-	// TODO Add annotation.
 	/**
-	 * Get name of operation
+	 * Name getter.
 	 * 
-	 * @return name of the operation.
+	 * @return Name of the operation.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Operation name setter.
+	 * Name setter.
 	 * 
 	 * @param name
-	 *            Operation name
+	 *            Operation name.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	// TODO Add annotation.
 	/**
-	 * Get list of actions.
+	 * List of actions getter.
 	 * 
-	 * @return List of actions
+	 * @return List of actions.
 	 */
 	public List<Action> getActions() {
 		return actions;
 	}
 
 	/**
-	 * Set the list with the given one
+	 * List of actions setter.
 	 * 
 	 * @param actions
 	 *            List of actions.
@@ -85,7 +83,7 @@ public class Operation {
 	/**
 	 * Job reference getter.
 	 * 
-	 * @return current job.
+	 * @return Job reference.
 	 */
 	public Job getJob() {
 		return job;
@@ -95,24 +93,23 @@ public class Operation {
 	 * Job reference setter.
 	 * 
 	 * @param job
-	 *            job name
+	 *            Job reference.
 	 */
 	public void setJob(Job job) {
 		this.job = job;
 	}
 
-	// TODO Add annotation.
 	/**
-	 * Get the previous operation.
+	 * Previous operation reference getter.
 	 * 
-	 * @return Reference to the previous operation
+	 * @return Reference to the previous operation.
 	 */
 	public Operation getPrevious() {
 		return previous;
 	}
 
 	/**
-	 * Set the previous operation.
+	 * Previous operation reference setter.
 	 * 
 	 * @param previous
 	 *            Reference to the previous operation.

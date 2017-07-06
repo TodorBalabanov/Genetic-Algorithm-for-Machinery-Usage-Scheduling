@@ -1,4 +1,3 @@
-
 /**
  * Single action on a single machine.
  * 
@@ -81,7 +80,7 @@ public class Action {
 	}
 
 	/**
-	 * Start field getter.
+	 * Start time getter.
 	 * 
 	 * @return Start time duration.
 	 */
@@ -90,7 +89,7 @@ public class Action {
 	}
 
 	/**
-	 * Start field setter.
+	 * Start time setter.
 	 * 
 	 * @param start
 	 *            Start time.
@@ -100,16 +99,16 @@ public class Action {
 	}
 
 	/**
-	 * Duration field getter.
+	 * Action duration getter.
 	 * 
-	 * @return duration Duration time.
+	 * @return Duration time.
 	 */
 	public int getDuration() {
 		return duration;
 	}
 
 	/**
-	 * Duration field setter
+	 * Action duration setter.
 	 *
 	 * @param duration
 	 *            Action duration.
@@ -119,16 +118,16 @@ public class Action {
 	}
 
 	/**
-	 * End field getter.
+	 * End time getter.
 	 * 
-	 * @return End time duration.
+	 * @return End time.
 	 */
 	public int getEnd() {
 		return end;
 	}
 
 	/**
-	 * . End field setter.
+	 * End time setter.
 	 *
 	 * @param end
 	 *            Action end time.
@@ -138,77 +137,76 @@ public class Action {
 	}
 
 	/**
-	 * Done field getter
+	 * Done flag getter.
 	 * 
-	 * @return Is done flag true;
+	 * @return Is done flag.
 	 */
 	public boolean isDone() {
 		return done;
 	}
 
 	/**
-	 * Done field setter s *
+	 * Done flag setter.
 	 * 
-	 * @param end
-	 *            Action end time.
+	 * @param done
+	 *            Is action done flag.
 	 */
 	public void setDone(boolean done) {
 		this.done = done;
 	}
 
 	/**
-	 * Machine field getter.
+	 * Machine reference getter.
 	 * 
-	 * @return Current machine.
-	 * 
+	 * @return Machine used for this action.
 	 */
 	public Machine getMachine() {
 		return machine;
 	}
 
 	/**
-	 * Machine field setter.
+	 * Machine reference setter.
 	 * 
 	 * @param machine
-	 *            Current machine.
+	 *            Machine to be used for this action.
 	 */
 	public void setMachine(Machine machine) {
 		this.machine = machine;
 	}
 
 	/**
-	 * Operation field getter.
+	 * Operation reference getter.
 	 * 
-	 * @return Current operation.
+	 * @return Operation reference.
 	 */
 	public Operation getOperation() {
 		return operation;
 	}
 
 	/**
-	 * Operation field setter.
+	 * Operation reference setter.
 	 * 
 	 * @param operation
-	 *            Current operation.
+	 *            Operation reference.
 	 */
 	public void setOperation(Operation operation) {
 		this.operation = operation;
 	}
 
 	/**
-	 * Previous field getter.
+	 * Previous action reference getter.
 	 * 
-	 * @return The previous operation.
+	 * @return The previous action reference.
 	 */
 	public Action getPrevious() {
 		return previous;
 	}
 
 	/**
-	 * Previous field setter.
+	 * Previous action reference setter.
 	 * 
 	 * @param previous
-	 *            Previous operation.
+	 *            Previous action reference.
 	 */
 	public void setPrevious(Action previous) {
 		this.previous = previous;

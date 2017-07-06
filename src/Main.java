@@ -8,7 +8,6 @@ import java.util.Random;
  * @author Todor Balabanov
  */
 class Job {
-
 	/**
 	 * Job title.
 	 */
@@ -54,7 +53,6 @@ class Job {
 	 * 
 	 * @param name
 	 *            Job name.
-	 * 
 	 */
 	public void setName(String name) {
 		this.name = name;
