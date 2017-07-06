@@ -39,26 +39,32 @@ class Machine {
 		this.action = action;
 	}
 
+	//TODO Add JavaDoc comment.
 	public String getName() {
 		return name;
 	}
 
+	//TODO Add JavaDoc comment.
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	//TODO Add JavaDoc comment.
 	public boolean isOccupied() {
 		return occupied;
 	}
 
+	//TODO Add JavaDoc comment.
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
 
+	//TODO Add JavaDoc comment.
 	public Action getAction() {
 		return action;
 	}
 
+	//TODO Add JavaDoc comment.
 	public void setAction(Action action) {
 		this.action = action;
 	}
@@ -83,37 +89,37 @@ class Action {
 	/**
 	 * Action start time.
 	 */
-	int start = 0;
+	private int start = 0;
 
 	/**
 	 * Action duration.
 	 */
-	int duration = 0;
+	private int duration = 0;
 
 	/**
 	 * Action end time.
 	 */
-	int end = 0;
+	private int end = 0;
 
 	/**
 	 * Action status.
 	 */
-	boolean done = false;
+	private boolean done = false;
 
 	/**
 	 * Machine used reference.
 	 */
-	Machine machine = null;
+	private Machine machine = null;
 
 	/**
 	 * Operation belongs reference.
 	 */
-	Operation operation = null;
+	private Operation operation = null;
 
 	/**
 	 * Reference to the previous action.
 	 */
-	Action previous = null;
+	private Action previous = null;
 
 	/**
 	 * Constructor with all parameters,
@@ -144,8 +150,6 @@ class Action {
 		this.previous = previous;
 	}
 
-	
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -155,6 +159,104 @@ class Action {
 	public String toString() {
 		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
 				+ machine + "]";
+	}
+
+	/**
+	 * Start field getter
+	 */
+	public int getStart() {
+		return start;
+	}
+
+	/**
+	 * Start field setter
+	 */
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	/**
+	 * Duration field getter
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	/**
+	 * Duration field setter
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	/**
+	 * End field getter
+	 */
+	public int getEnd() {
+		return end;
+	}
+
+	/**
+	 * End field setter
+	 */
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	/**
+	 * Done field getter
+	 */
+	public boolean isDone() {
+		return done;
+	}
+
+	/**
+	 * Done field setter
+	 */
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
+	/**
+	 * Machine field getter
+	 */
+	public Machine getMachine() {
+		return machine;
+	}
+
+	/**
+	 * Machine field setter
+	 */
+	public void setMachine(Machine machine) {
+		this.machine = machine;
+	}
+
+	/**
+	 * Operation field getter
+	 */
+	public Operation getOperation() {
+		return operation;
+	}
+
+	/**
+	 * Operation field setter
+	 */
+	public void setOperation(Operation operation) {
+		this.operation = operation;
+	}
+
+	/**
+	 * Previous field getter
+	 */
+	public Action getPrevious() {
+		return previous;
+	}
+
+	/**
+	 * Previous field setter
+	 */
+	public void setPrevious(Action previous) {
+		this.previous = previous;
 	}
 }
 
@@ -284,16 +386,17 @@ class Operation {
  * @author Todor Balabanov
  */
 class Job {
+
 	/**
 	 * Job title.
 	 */
-	String name = "";
+	private String name = "";
 
 	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of operations taken for this job.
 	 */
-	List<Operation> operations = new ArrayList<Operation>();
+	private List<Operation> operations = new ArrayList<Operation>();
 
 	/**
 	 * Constructor with all parameters.
@@ -313,6 +416,34 @@ class Job {
 	@Override
 	public String toString() {
 		return "Job [name=" + name + ", operations=" + operations + "]";
+	}
+
+	/**
+	 * Name field getter
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Name field setter
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Operation list getter
+	 */
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	/**
+	 * Operation list setter
+	 */
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 }
 
@@ -373,12 +504,12 @@ public class Main {
 			int i = 1;
 			for (Job job : jobs) {
 				while (i < data.length
-						&& (job.name.equals(data[i][0].toString()) || data[i][0].toString().equals(""))) {
+						&& (job.getName().equals(data[i][0].toString()) || data[i][0].toString().equals(""))) {
 					Operation previous = null;
-					if (job.operations.size() > 0) {
-						previous = job.operations.get(job.operations.size() - 1);
+					if (job.getOperations().size() > 0) {
+						previous = job.getOperations().get(job.getOperations().size() - 1);
 					}
-					job.operations.add(new Operation(data[i][1].toString(), job, previous));
+					job.getOperations().add(new Operation(data[i][1].toString(), job, previous));
 					i++;
 				}
 			}
@@ -389,7 +520,7 @@ public class Main {
 		 */ {
 			int i = 1;
 			for (Job job : jobs) {
-				for (Operation operation : job.operations) {
+				for (Operation operation : job.getOperations()) {
 					for (int j = 2; j < data[i].length; j++) {
 						Action previous = null;
 						if (operation.getActions().size() > 0) {
@@ -418,10 +549,10 @@ public class Main {
 	 */
 	private static void takeRandomTimes(List<Job> jobs, int min, int max) {
 		for (Job job : jobs) {
-			for (Operation operation : job.operations) {
+			for (Operation operation : job.getOperations()) {
 				for (Action action : operation.getActions()) {
-					action.start = min + PRNG.nextInt(max - min + 1);
-					action.end = action.start + action.duration;
+					action.setStart(min + PRNG.nextInt(max - min + 1));
+					action.setEnd(action.getStart() + action.getDuration());
 				}
 			}
 		}
@@ -446,10 +577,10 @@ public class Main {
 				/*
 				 * It is time the action to be done.
 				 */
-				if (action.start == time && action.done == false) {
-					if (action.machine.isOccupied() == false) {
-						action.machine.setOccupied(true);
-						action.machine.setAction(action);
+				if (action.getStart() == time && action.isDone() == false) {
+					if (action.getMachine().isOccupied() == false) {
+						action.getMachine().setOccupied(true);
+						action.getMachine().setAction(action);
 					} else {
 						System.err.println("Schedule collision for: " + action);
 					}
@@ -458,11 +589,11 @@ public class Main {
 				/*
 				 * It is time the action to be done.
 				 */
-				if (action.end == time) {
-					if (action.machine.isOccupied() == true) {
-						action.done = true;
-						action.machine.setOccupied(false);
-						action.machine.setAction(null);
+				if (action.getEnd() == time) {
+					if (action.getMachine().isOccupied() == true) {
+						action.setDone(true);
+						action.getMachine().setOccupied(false);
+						action.getMachine().setAction(null);
 					} else {
 						System.err.println("Schedule omission for: " + action);
 					}
