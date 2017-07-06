@@ -11,17 +11,17 @@ class Machine {
 	/**
 	 * Machine title.
 	 */
-	String name = "";
+	private String name = "";
 
 	/**
 	 * Is machine occupied by particular action flag.
 	 */
-	boolean occupied = false;
+	private boolean occupied = false;
 
 	/**
 	 * Reference to external action object.
 	 */
-	Action action = null;
+	private Action action = null;
 
 	/**
 	 * Constructor with all parameters.
@@ -38,6 +38,31 @@ class Machine {
 		this.occupied = occupied;
 		this.action = action;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public boolean isOccupied() {
+		return occupied;
+	}
+	
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
+	}
+	
+	public Action getAction() {
+		return action;
+	}
+	
+	public void setAction(Action action) {
+		this.action = action;
+	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -239,25 +264,25 @@ class Operation {
 	/**
 	 * Operation title.
 	 */
-	String name = "";
+	private String name = "";
 
 	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of actions taken for this operation.
 	 */
-	List<Action> actions = new ArrayList<Action>();
+	private List<Action> actions = new ArrayList<Action>();
 
 	/**
 	 * Job belongs reference.
 	 */
-	Job job = null;
+	private Job job = null;
 
 	/**
 	 * Reference to the previous operation.
 	 */
-	Operation previous = null;
+	private Operation previous = null;
 
-	/**
+  /**
 	 * Constructor with all parameters.
 	 * 
 	 * @param name
@@ -265,11 +290,85 @@ class Operation {
 	 * @param job
 	 *            Job reference.
 	 */
-	public Operation(String name, Job job) {
+	public Operation(String name, Job job, Operation previous) {
 		this.name = name;
 		this.job = job;
 		this.previous = previous;
 	}
+	
+	/**
+	 * Get name of operation
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+    /**
+     * Set operation name
+     * 
+     * @param name
+     * 			  Operation name
+     */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	/**
+	 * Get list of operations
+	 */
+	public List<Action> getActions() {
+		return actions;
+	}
+
+	/**
+	 * Set the list with the given one
+	 * 	
+	 * @param actions 
+	 * 				list name
+	 */
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
+
+
+	/**
+	 * Get the current Job
+	 */
+	public Job getJob() {
+		return job;
+	}
+
+
+	/**
+	 * Set the current Job
+	 * 
+	 * @param job
+	 * 			job name
+	 */
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
+	/**
+	 * Get the previous operation
+	 */
+	public Operation getPrevious() {
+		return previous;
+	}
+
+	/**
+	 * Set the previous operation
+	 * 
+	 * @param previous
+	 * 				the name of the previous operation
+	 */
+	public void setPrevious(Operation previous) {
+		this.previous = previous;
+	}
+
+
 
 	/*
 	 * (non-Javadoc)
@@ -411,7 +510,7 @@ public class Main {
 					if (job.operations.size() > 0) {
 						previous = job.operations.get(job.operations.size() - 1);
 					}
-					job.operations.add(new Operation(data[i][1].toString(), job));
+					job.operations.add(new Operation(data[i][1].toString(), job, previous));
 					i++;
 				}
 			}
@@ -425,12 +524,12 @@ public class Main {
 				for (Operation operation : job.operations) {
 					for (int j = 2; j < data[i].length; j++) {
 						Action previous = null;
-						if (operation.actions.size() > 0) {
-							previous = operation.actions.get(operation.actions.size() - 1);
+						if (operation.getActions().size() > 0) {
+							previous = operation.getActions().get(operation.getActions().size() - 1);
 						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
 								operation, previous);
-						operation.actions.add(action);
+						operation.getActions().add(action);
 						actions.add(action);
 					}
 
