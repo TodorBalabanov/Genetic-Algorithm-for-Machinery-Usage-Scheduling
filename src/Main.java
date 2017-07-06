@@ -38,31 +38,30 @@ class Machine {
 		this.occupied = occupied;
 		this.action = action;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public boolean isOccupied() {
 		return occupied;
 	}
-	
+
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
-	
+
 	public Action getAction() {
 		return action;
 	}
-	
+
 	public void setAction(Action action) {
 		this.action = action;
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -145,6 +144,8 @@ class Action {
 		this.previous = previous;
 	}
 
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -168,7 +169,7 @@ class Operation {
 	 */
 	private String name = "";
 
-	//TODO May be LinkedList is better choice for this member field.
+	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of actions taken for this operation.
 	 */
@@ -183,7 +184,7 @@ class Operation {
 	 * Reference to the previous operation.
 	 */
 	private Operation previous = null;
-	
+
 	/**
 	 * Constructor with all parameters.
 	 * 
@@ -197,7 +198,7 @@ class Operation {
 		this.job = job;
 		this.previous = previous;
 	}
-	
+
 	/**
 	 * Get name of operation
 	 */
@@ -205,17 +206,15 @@ class Operation {
 		return name;
 	}
 
-
-    /**
-     * Set operation name
-     * 
-     * @param name
-     * 			  Operation name
-     */
+	/**
+	 * Set operation name
+	 * 
+	 * @param name
+	 *            Operation name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	/**
 	 * Get list of operations
@@ -226,14 +225,13 @@ class Operation {
 
 	/**
 	 * Set the list with the given one
-	 * 	
-	 * @param actions 
-	 * 				list name
+	 * 
+	 * @param actions
+	 *            list name
 	 */
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
-
 
 	/**
 	 * Get the current Job
@@ -242,12 +240,11 @@ class Operation {
 		return job;
 	}
 
-
 	/**
 	 * Set the current Job
 	 * 
 	 * @param job
-	 * 			job name
+	 *            job name
 	 */
 	public void setJob(Job job) {
 		this.job = job;
@@ -264,13 +261,11 @@ class Operation {
 	 * Set the previous operation
 	 * 
 	 * @param previous
-	 * 				the name of the previous operation
+	 *            the name of the previous operation
 	 */
 	public void setPrevious(Operation previous) {
 		this.previous = previous;
 	}
-
-
 
 	/*
 	 * (non-Javadoc)
@@ -294,7 +289,7 @@ class Job {
 	 */
 	String name = "";
 
-	//TODO May be LinkedList is better choice for this member field.
+	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of operations taken for this job.
 	 */
@@ -380,8 +375,8 @@ public class Main {
 				while (i < data.length
 						&& (job.name.equals(data[i][0].toString()) || data[i][0].toString().equals(""))) {
 					Operation previous = null;
-					if(job.operations.size() > 0) {
-						previous = job.operations.get( job.operations.size()-1 );
+					if (job.operations.size() > 0) {
+						previous = job.operations.get(job.operations.size() - 1);
 					}
 					job.operations.add(new Operation(data[i][1].toString(), job, previous));
 					i++;
@@ -452,9 +447,9 @@ public class Main {
 				 * It is time the action to be done.
 				 */
 				if (action.start == time && action.done == false) {
-					if (action.machine.occupied == false) {
-						action.machine.occupied = true;
-						action.machine.action = action;
+					if (action.machine.isOccupied() == false) {
+						action.machine.setOccupied(true);
+						action.machine.setAction(action);
 					} else {
 						System.err.println("Schedule collision for: " + action);
 					}
@@ -464,15 +459,14 @@ public class Main {
 				 * It is time the action to be done.
 				 */
 				if (action.end == time) {
-					if (action.machine.occupied == true) {
+					if (action.machine.isOccupied() == true) {
 						action.done = true;
-						action.machine.occupied = false;
-						action.machine.action = null;
+						action.machine.setOccupied(false);
+						action.machine.setAction(null);
 					} else {
 						System.err.println("Schedule omission for: " + action);
 					}
 				}
-
 			}
 		}
 	}
