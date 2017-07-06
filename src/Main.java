@@ -3,323 +3,6 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Single action on a single machine.
- * 
- * @author Todor Balabanov
- */
-class Action {
-	/**
-	 * Action start time.
-	 */
-	private int start = 0;
-
-	/**
-	 * Action duration.
-	 */
-	private int duration = 0;
-
-	/**
-	 * Action end time.
-	 */
-	private int end = 0;
-
-	/**
-	 * Action status.
-	 */
-	private boolean done = false;
-
-	/**
-	 * Machine used reference.
-	 */
-	private Machine machine = null;
-
-	/**
-	 * Operation belongs reference.
-	 */
-	private Operation operation = null;
-
-	/**
-	 * Reference to the previous action.
-	 */
-	private Action previous = null;
-
-	/**
-	 * Constructor with all parameters,
-	 * 
-	 * @param start
-	 *            Action start time.
-	 * @param duration
-	 *            Action duration.
-	 * @param end
-	 *            Action end time.
-	 * @param done
-	 *            Is action done flag.
-	 * @param machine
-	 *            Machine reference.
-	 * @param operation
-	 *            Operation reference.
-	 * @param previous
-	 *            Reference to the previous action.
-	 */
-	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation,
-			Action previous) {
-		this.start = start;
-		this.duration = duration;
-		this.end = end;
-		this.done = done;
-		this.machine = machine;
-		this.operation = operation;
-		this.previous = previous;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
-				+ machine + "]";
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Start field getter
-	 */
-	public int getStart() {
-		return start;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Start field setter
-	 */
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Duration field getter
-	 */
-	public int getDuration() {
-		return duration;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Duration field setter
-	 */
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * End field getter
-	 */
-	public int getEnd() {
-		return end;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * End field setter
-	 */
-	public void setEnd(int end) {
-		this.end = end;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Done field getter
-	 */
-	public boolean isDone() {
-		return done;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Done field setter
-	 */
-	public void setDone(boolean done) {
-		this.done = done;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Machine field getter
-	 */
-	public Machine getMachine() {
-		return machine;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Machine field setter
-	 */
-	public void setMachine(Machine machine) {
-		this.machine = machine;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Operation field getter
-	 */
-	public Operation getOperation() {
-		return operation;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Operation field setter
-	 */
-	public void setOperation(Operation operation) {
-		this.operation = operation;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Previous field getter
-	 */
-	public Action getPrevious() {
-		return previous;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Previous field setter
-	 */
-	public void setPrevious(Action previous) {
-		this.previous = previous;
-	}
-}
-
-/**
- * Operation is a set of actions to be taken in particular order.
- * 
- * @author Todor Balabanov
- */
-class Operation {
-	/**
-	 * Operation title.
-	 */
-	private String name = "";
-
-	// TODO May be LinkedList is better choice for this member field.
-	/**
-	 * List of actions taken for this operation.
-	 */
-	private List<Action> actions = new ArrayList<Action>();
-
-	/**
-	 * Job belongs reference.
-	 */
-	private Job job = null;
-
-	/**
-	 * Reference to the previous operation.
-	 */
-	private Operation previous = null;
-
-	/**
-	 * Constructor with all parameters.
-	 * 
-	 * @param name
-	 *            Operation name.
-	 * @param job
-	 *            Job reference.
-	 */
-	public Operation(String name, Job job, Operation previous) {
-		this.name = name;
-		this.job = job;
-		this.previous = previous;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get name of operation
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Operation name setter.
-	 * 
-	 * @param name
-	 *            Operation name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get list of operations.
-	 */
-	public List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * Set the list with the given one
-	 * 
-	 * @param actions
-	 *            List of actions.
-	 */
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
-	/**
-	 * Job reference getter.
-	 */
-	public Job getJob() {
-		return job;
-	}
-
-	/**
-	 * Job reference setter.
-	 * 
-	 * @param job
-	 *            job name
-	 */
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get the previous operation.
-	 */
-	public Operation getPrevious() {
-		return previous;
-	}
-
-	/**
-	 * Set the previous operation.
-	 * 
-	 * @param previous
-	 *            Reference to the previous operation.
-	 */
-	public void setPrevious(Operation previous) {
-		this.previous = previous;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Operation [name=" + name + ", actions=" + actions + "]";
-	}
-}
-
-/**
  * Job is a set of operations to be taken in particular order.
  * 
  * @author Todor Balabanov
@@ -358,31 +41,42 @@ class Job {
 	}
 
 	/**
-	 * Name field getter
+	 * Name field getter.
+	 * 
+	 * @return Job name.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Name field setter
+	 * Name field setter.
+	 * 
+	 * @param name
+	 *            Job name.
+	 * 
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Operation list getter
-	 */
-	public List<Operation> getOperations() {
-		return operations;
-	}
-
-	/**
-	 * Operation list setter
+	 * Operation list setter.
+	 * 
+	 * @param operations
+	 *            The list of operations.
 	 */
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+
+	/**
+	 * Operation list getter.
+	 * 
+	 * @return The list of operations.
+	 */
+	public List<Operation> getOperations() {
+		return operations;
 	}
 }
 
