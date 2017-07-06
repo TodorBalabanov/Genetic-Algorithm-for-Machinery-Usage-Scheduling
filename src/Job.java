@@ -28,18 +28,8 @@ class Job {
 		this.name = name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Job [name=" + name + ", operations=" + operations + "]";
-	}
-
 	/**
-	 * Job name getter.
+	 * Name getter.
 	 * 
 	 * @return Job name.
 	 */
@@ -48,7 +38,7 @@ class Job {
 	}
 
 	/**
-	 * Job name setter.
+	 * Name setter.
 	 * 
 	 * @param name
 	 *            Job name.
@@ -74,5 +64,15 @@ class Job {
 	 */
 	public List<Operation> getOperations() {
 		return operations;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Job [name=" + name + ", operations=" + operations + "]";
 	}
 }

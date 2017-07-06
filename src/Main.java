@@ -3,11 +3,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Application single entry point class.
+ * Single work unit consists of jobs.
  * 
  * @author Todor Balabanov
  */
-public class Main {
+class WorkUnit {
 	/**
 	 * Pseudo random number generator.
 	 */
@@ -16,25 +16,44 @@ public class Main {
 	/**
 	 * List of the available machines.
 	 */
-	private static List<Machine> machines = new ArrayList<Machine>();
+	private List<Machine> machines = new ArrayList<Machine>();
 
 	/**
 	 * List of operations taken for this job.
 	 */
-	private static List<Job> jobs = new ArrayList<Job>();
+	private List<Job> jobs = new ArrayList<Job>();
 
 	/**
 	 * List of action references.
 	 */
-	private static List<Action> actions = new ArrayList<Action>();
+	private List<Action> actions = new ArrayList<Action>();
+
+	/**
+	 * Reference to data object for the problem to be solved.
+	 */
+	Object data[][] = null;
+
+	/**
+	 * Constructor with all parameters.
+	 * 
+	 * @param data
+	 *            Problem data object reference.
+	 */
+	public WorkUnit(Object[][] data) {
+		this.data = data;
+	}
 
 	/**
 	 * Data loading from an array.
-	 * 
-	 * @param data
-	 *            Algorithm input data as 2D array.
 	 */
-	private static void load(Object[][] data) {
+	public void load() {
+		/*
+		 * Clear from previous use.
+		 */
+		machines.clear();
+		jobs.clear();
+		actions.clear();
+
 		/*
 		 * Load machines list.
 		 */ {
@@ -99,10 +118,12 @@ public class Main {
 	/**
 	 * Select random start times of all actions.
 	 * 
-	 * @param jobs
-	 *            Jobs list.
+	 * @param min
+	 *            Minimum random value to be used.
+	 * @param max
+	 *            Maximum random value to be used.
 	 */
-	private static void takeRandomTimes(List<Job> jobs, int min, int max) {
+	public void adjustRandomTimes(int min, int max) {
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
 				for (Action action : operation.getActions()) {
@@ -118,14 +139,8 @@ public class Main {
 	 * 
 	 * @param limit
 	 *            Limit discrete time for the simulation.
-	 * @param machines
-	 *            List of machines.
-	 * @param jobs
-	 *            Jobs list to be done in the work unit.
-	 * @param actions
-	 *            List of actions.
 	 */
-	private static void simulate(int limit, List<Machine> machines, List<Job> jobs, List<Action> actions) {
+	public void simulate(int limit) {
 		for (int time = 0; time < limit; time++) {
 			// TODO Do the simulation.
 			for (Action action : actions) {
@@ -137,6 +152,7 @@ public class Main {
 						action.getMachine().setOccupied(true);
 						action.getMachine().setAction(action);
 					} else {
+						// TODO Implement better reporting functionality.
 						System.err.println("Schedule collision for: " + action);
 					}
 				}
@@ -150,13 +166,21 @@ public class Main {
 						action.getMachine().setOccupied(false);
 						action.getMachine().setAction(null);
 					} else {
+						// TODO Implement better reporting functionality.
 						System.err.println("Schedule omission for: " + action);
 					}
 				}
 			}
 		}
 	}
+}
 
+/**
+ * Application single entry point class.
+ * 
+ * @author Todor Balabanov
+ */
+public class Main {
 	/**
 	 * Single entry point method.
 	 * 
@@ -170,10 +194,10 @@ public class Main {
 				{ "", "О32", 6, 1, 2, 5, 4, }, { "", "О33", 2, 5, 4, 2, 4, }, { "", "O34", 4, 5, 2, 1, 5, },
 				{ "J4", "O41", 1, 5, 2, 4, 12, }, { "", "O42", 5, 1, 2, 1, 2, }, };
 
-		load(data);
+		WorkUnit work = new WorkUnit(data);
 
-		takeRandomTimes(jobs, 100, 1000);
-
-		simulate(10000000, machines, jobs, actions);
+		work.load();
+		work.adjustRandomTimes(100, 1000);
+		work.simulate(10000000);
 	}
 }

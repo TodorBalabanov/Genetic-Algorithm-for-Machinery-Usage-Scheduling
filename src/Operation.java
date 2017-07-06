@@ -6,7 +6,7 @@ import java.util.List;
  * 
  * @author Todor Balabanov
  */
-public class Operation {
+class Operation {
 	/**
 	 * Operation title.
 	 */

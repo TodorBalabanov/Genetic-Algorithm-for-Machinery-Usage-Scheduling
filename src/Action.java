@@ -3,7 +3,7 @@
  * 
  * @author Todor Balabanov
  */
-public class Action {
+class Action {
 	/**
 	 * Action start time.
 	 */
