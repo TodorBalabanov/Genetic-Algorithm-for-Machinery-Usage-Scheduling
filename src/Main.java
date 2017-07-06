@@ -39,26 +39,32 @@ class Machine {
 		this.action = action;
 	}
 
+	// TODO Add JavaDoc comment.
 	public String getName() {
 		return name;
 	}
 
+	// TODO Add JavaDoc comment.
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	// TODO Add JavaDoc comment.
 	public boolean isOccupied() {
 		return occupied;
 	}
 
+	// TODO Add JavaDoc comment.
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
 
+	// TODO Add JavaDoc comment.
 	public Action getAction() {
 		return action;
 	}
 
+	// TODO Add JavaDoc comment.
 	public void setAction(Action action) {
 		this.action = action;
 	}
@@ -75,120 +81,72 @@ class Machine {
 }
 
 /**
- * Operation is a set of actions to be taken in particular order.
+ * Single action on a single machine.
  * 
  * @author Todor Balabanov
  */
-class Operation {
+class Action {
 	/**
-	 * Operation title.
+	 * Action start time.
 	 */
-	private String name = "";
-
-	// TODO May be LinkedList is better choice for this member field.
-	/**
-	 * List of actions taken for this operation.
-	 */
-	private List<Action> actions = new ArrayList<Action>();
+	private int start = 0;
 
 	/**
-	 * Job belongs reference.
+	 * Action duration.
 	 */
-	private Job job = null;
+	private int duration = 0;
 
 	/**
-	 * Reference to the previous operation.
+	 * Action end time.
 	 */
-	private Operation previous = null;
+	private int end = 0;
 
 	/**
-	 * Constructor with all parameters.
+	 * Action status.
+	 */
+	private boolean done = false;
+
+	/**
+	 * Machine used reference.
+	 */
+	private Machine machine = null;
+
+	/**
+	 * Operation belongs reference.
+	 */
+	private Operation operation = null;
+
+	/**
+	 * Reference to the previous action.
+	 */
+	private Action previous = null;
+
+	/**
+	 * Constructor with all parameters,
 	 * 
-	 * @param name
-	 *            Operation name.
-	 * @param job
-	 *            Job reference.
-	 */
-	public Operation(String name, Job job, Operation previous) {
-		this.name = name;
-		this.job = job;
-		this.previous = previous;
-	}
-
-	/**
-	 * Get name of operation
-	 * 
-	 * @return The name of the job.
-	 * 
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Set operation name
-	 * 
-	 * @param name
-	 *            Operation name.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Get list of operations
-	 * 
-	 * @return List of operations.
-	 */
-	public List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * Set the list with the given one
-	 * 
-	 * @param actions
-	 *            The current list name.
-	 */
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
-	/**
-	 * Get the current Job
-	 * 
-	 * @return The current job.
-	 */
-	public Job getJob() {
-		return job;
-	}
-
-	/**
-	 * Set the current Job
-	 * 
-	 * @param job
-	 *            Job name.
-	 */
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
-	/**
-	 * Get the previous operation
-	 * 
-	 * @return The previous operation.
-	 */
-	public Operation getPrevious() {
-		return previous;
-	}
-
-	/**
-	 * Set the previous operation
-	 * 
+	 * @param start
+	 *            Action start time.
+	 * @param duration
+	 *            Action duration.
+	 * @param end
+	 *            Action end time.
+	 * @param done
+	 *            Is action done flag.
+	 * @param machine
+	 *            Machine reference.
+	 * @param operation
+	 *            Operation reference.
 	 * @param previous
-	 *            The name of the previous operation.
+	 *            Reference to the previous action.
 	 */
-	public void setPrevious(Operation previous) {
+	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation,
+			Action previous) {
+		this.start = start;
+		this.duration = duration;
+		this.end = end;
+		this.done = done;
+		this.machine = machine;
+		this.operation = operation;
 		this.previous = previous;
 	}
 
@@ -199,7 +157,120 @@ class Operation {
 	 */
 	@Override
 	public String toString() {
-		return "Operation [name=" + name + ", actions=" + actions + "]";
+		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
+				+ machine + "]";
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Start field getter
+	 */
+	public int getStart() {
+		return start;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Start field setter
+	 */
+	public void setStart(int start) {
+		this.start = start;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Duration field getter
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Duration field setter
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * End field getter
+	 */
+	public int getEnd() {
+		return end;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * End field setter
+	 */
+	public void setEnd(int end) {
+		this.end = end;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Done field getter
+	 */
+	public boolean isDone() {
+		return done;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Done field setter
+	 */
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Machine field getter
+	 */
+	public Machine getMachine() {
+		return machine;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Machine field setter
+	 */
+	public void setMachine(Machine machine) {
+		this.machine = machine;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Operation field getter
+	 */
+	public Operation getOperation() {
+		return operation;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Operation field setter
+	 */
+	public void setOperation(Operation operation) {
+		this.operation = operation;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Previous field getter
+	 */
+	public Action getPrevious() {
+		return previous;
+	}
+
+	// TODO Add annotation.
+	/**
+	 * Previous field setter
+	 */
+	public void setPrevious(Action previous) {
+		this.previous = previous;
 	}
 }
 
@@ -413,7 +484,7 @@ public class Main {
 				 */
 				if (action.getStart() == time && action.isDone() == false) {
 					if (action.getMachine().isOccupied() == false) {
-						action.getMachine().setOccupied(false);
+						action.getMachine().setOccupied(true);
 						action.getMachine().setAction(action);
 					} else {
 						System.err.println("Schedule collision for: " + action);
@@ -432,7 +503,6 @@ public class Main {
 						System.err.println("Schedule omission for: " + action);
 					}
 				}
-
 			}
 		}
 	}
