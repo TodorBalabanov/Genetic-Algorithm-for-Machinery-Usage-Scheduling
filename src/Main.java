@@ -161,6 +161,7 @@ class Action {
 				+ machine + "]";
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Start field getter
 	 */
@@ -168,6 +169,7 @@ class Action {
 		return start;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Start field setter
 	 */
@@ -175,6 +177,7 @@ class Action {
 		this.start = start;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Duration field getter
 	 */
@@ -182,6 +185,7 @@ class Action {
 		return duration;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Duration field setter
 	 */
@@ -189,6 +193,7 @@ class Action {
 		this.duration = duration;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * End field getter
 	 */
@@ -196,6 +201,7 @@ class Action {
 		return end;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * End field setter
 	 */
@@ -203,6 +209,7 @@ class Action {
 		this.end = end;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Done field getter
 	 */
@@ -210,6 +217,7 @@ class Action {
 		return done;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Done field setter
 	 */
@@ -217,6 +225,7 @@ class Action {
 		this.done = done;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Machine field getter
 	 */
@@ -224,6 +233,7 @@ class Action {
 		return machine;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Machine field setter
 	 */
@@ -231,6 +241,7 @@ class Action {
 		this.machine = machine;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Operation field getter
 	 */
@@ -238,6 +249,7 @@ class Action {
 		return operation;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Operation field setter
 	 */
@@ -245,6 +257,7 @@ class Action {
 		this.operation = operation;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Previous field getter
 	 */
@@ -252,6 +265,7 @@ class Action {
 		return previous;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Previous field setter
 	 */
@@ -301,6 +315,7 @@ class Operation {
 		this.previous = previous;
 	}
 
+	//TODO Add annotation.
 	/**
 	 * Get name of operation
 	 */
@@ -309,7 +324,7 @@ class Operation {
 	}
 
 	/**
-	 * Set operation name
+	 * Operation name setter.
 	 * 
 	 * @param name
 	 *            Operation name
@@ -318,8 +333,9 @@ class Operation {
 		this.name = name;
 	}
 
+	//TODO Add annotation.
 	/**
-	 * Get list of operations
+	 * Get list of operations.
 	 */
 	public List<Action> getActions() {
 		return actions;
@@ -329,21 +345,21 @@ class Operation {
 	 * Set the list with the given one
 	 * 
 	 * @param actions
-	 *            list name
+	 *            List of actions.
 	 */
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
 
 	/**
-	 * Get the current Job
+	 * Job reference getter.
 	 */
 	public Job getJob() {
 		return job;
 	}
 
 	/**
-	 * Set the current Job
+	 * Job reference setter.
 	 * 
 	 * @param job
 	 *            job name
@@ -352,18 +368,19 @@ class Operation {
 		this.job = job;
 	}
 
+	//TODO Add annotation.
 	/**
-	 * Get the previous operation
+	 * Get the previous operation.
 	 */
 	public Operation getPrevious() {
 		return previous;
 	}
 
 	/**
-	 * Set the previous operation
+	 * Set the previous operation.
 	 * 
 	 * @param previous
-	 *            the name of the previous operation
+	 *            Reference to the previous operation.
 	 */
 	public void setPrevious(Operation previous) {
 		this.previous = previous;
