@@ -19,16 +19,24 @@ class Machine {
 	boolean occupied = false;
 
 	/**
+	 * Reference to external action object.
+	 */
+	Action action = null;
+
+	/**
 	 * Constructor with all parameters.
 	 * 
 	 * @param name
 	 *            Machine title.
 	 * @param occupied
 	 *            Machine status.
+	 * @param action
+	 *            Reference to the action in progress.
 	 */
-	public Machine(String name, boolean occupied) {
+	public Machine(String name, boolean occupied, Action action) {
 		this.name = name;
 		this.occupied = occupied;
+		this.action = action;
 	}
 
 	/*
@@ -79,6 +87,11 @@ class Action {
 	Operation operation = null;
 
 	/**
+	 * Reference to the previous action.
+	 */
+	Action previous = null;
+
+	/**
 	 * Constructor with all parameters,
 	 * 
 	 * @param start
@@ -93,14 +106,18 @@ class Action {
 	 *            Machine reference.
 	 * @param operation
 	 *            Operation reference.
+	 * @param previous
+	 *            Reference to the previous action.
 	 */
-	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation) {
+	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation,
+			Action previous) {
 		this.start = start;
 		this.duration = duration;
 		this.end = end;
 		this.done = done;
 		this.machine = machine;
 		this.operation = operation;
+		this.previous = previous;
 	}
 
 	/*
@@ -126,6 +143,7 @@ class Operation {
 	 */
 	String name = "";
 
+	//TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of actions taken for this operation.
 	 */
@@ -137,6 +155,11 @@ class Operation {
 	Job job = null;
 
 	/**
+	 * Reference to the previous operation.
+	 */
+	Operation previous = null;
+	
+	/**
 	 * Constructor with all parameters.
 	 * 
 	 * @param name
@@ -147,6 +170,7 @@ class Operation {
 	public Operation(String name, Job job) {
 		this.name = name;
 		this.job = job;
+		this.previous = previous;
 	}
 
 	/*
@@ -171,6 +195,7 @@ class Job {
 	 */
 	String name = "";
 
+	//TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of operations taken for this job.
 	 */
@@ -234,7 +259,7 @@ public class Main {
 		 * Load machines list.
 		 */ {
 			for (int j = 2; j < data[0].length; j++) {
-				machines.add(new Machine(data[0][j].toString(), false));
+				machines.add(new Machine(data[0][j].toString(), false, null));
 			}
 		}
 
@@ -255,6 +280,10 @@ public class Main {
 			for (Job job : jobs) {
 				while (i < data.length
 						&& (job.name.equals(data[i][0].toString()) || data[i][0].toString().equals(""))) {
+					Operation previous = null;
+					if(job.operations.size() > 0) {
+						previous = job.operations.get( job.operations.size()-1 );
+					}
 					job.operations.add(new Operation(data[i][1].toString(), job));
 					i++;
 				}
@@ -268,8 +297,12 @@ public class Main {
 			for (Job job : jobs) {
 				for (Operation operation : job.operations) {
 					for (int j = 2; j < data[i].length; j++) {
+						Action previous = null;
+						if (operation.actions.size() > 0) {
+							previous = operation.actions.get(operation.actions.size() - 1);
+						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
-								operation);
+								operation, previous);
 						operation.actions.add(action);
 						actions.add(action);
 					}
@@ -322,6 +355,7 @@ public class Main {
 				if (action.start == time && action.done == false) {
 					if (action.machine.occupied == false) {
 						action.machine.occupied = true;
+						action.machine.action = action;
 					} else {
 						System.err.println("Schedule collision for: " + action);
 					}
@@ -334,6 +368,7 @@ public class Main {
 					if (action.machine.occupied == true) {
 						action.done = true;
 						action.machine.occupied = false;
+						action.machine.action = null;
 					} else {
 						System.err.println("Schedule omission for: " + action);
 					}
