@@ -39,32 +39,32 @@ class Machine {
 		this.action = action;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public String getName() {
 		return name;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public boolean isOccupied() {
 		return occupied;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public Action getAction() {
 		return action;
 	}
 
-	//TODO Add JavaDoc comment.
+	// TODO Add JavaDoc comment.
 	public void setAction(Action action) {
 		this.action = action;
 	}
@@ -161,7 +161,7 @@ class Action {
 				+ machine + "]";
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Start field getter
 	 */
@@ -169,7 +169,7 @@ class Action {
 		return start;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Start field setter
 	 */
@@ -177,7 +177,7 @@ class Action {
 		this.start = start;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Duration field getter
 	 */
@@ -185,7 +185,7 @@ class Action {
 		return duration;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Duration field setter
 	 */
@@ -193,7 +193,7 @@ class Action {
 		this.duration = duration;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * End field getter
 	 */
@@ -201,7 +201,7 @@ class Action {
 		return end;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * End field setter
 	 */
@@ -209,7 +209,7 @@ class Action {
 		this.end = end;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Done field getter
 	 */
@@ -217,7 +217,7 @@ class Action {
 		return done;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Done field setter
 	 */
@@ -225,7 +225,7 @@ class Action {
 		this.done = done;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Machine field getter
 	 */
@@ -233,7 +233,7 @@ class Action {
 		return machine;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Machine field setter
 	 */
@@ -241,7 +241,7 @@ class Action {
 		this.machine = machine;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Operation field getter
 	 */
@@ -249,7 +249,7 @@ class Action {
 		return operation;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Operation field setter
 	 */
@@ -257,7 +257,7 @@ class Action {
 		this.operation = operation;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Previous field getter
 	 */
@@ -265,135 +265,12 @@ class Action {
 		return previous;
 	}
 
-	//TODO Add annotation.
+	// TODO Add annotation.
 	/**
 	 * Previous field setter
 	 */
 	public void setPrevious(Action previous) {
 		this.previous = previous;
-	}
-}
-
-/**
- * Operation is a set of actions to be taken in particular order.
- * 
- * @author Todor Balabanov
- */
-class Operation {
-	/**
-	 * Operation title.
-	 */
-	private String name = "";
-
-	// TODO May be LinkedList is better choice for this member field.
-	/**
-	 * List of actions taken for this operation.
-	 */
-	private List<Action> actions = new ArrayList<Action>();
-
-	/**
-	 * Job belongs reference.
-	 */
-	private Job job = null;
-
-	/**
-	 * Reference to the previous operation.
-	 */
-	private Operation previous = null;
-
-	/**
-	 * Constructor with all parameters.
-	 * 
-	 * @param name
-	 *            Operation name.
-	 * @param job
-	 *            Job reference.
-	 */
-	public Operation(String name, Job job, Operation previous) {
-		this.name = name;
-		this.job = job;
-		this.previous = previous;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get name of operation
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Operation name setter.
-	 * 
-	 * @param name
-	 *            Operation name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get list of operations.
-	 */
-	public List<Action> getActions() {
-		return actions;
-	}
-
-	/**
-	 * Set the list with the given one
-	 * 
-	 * @param actions
-	 *            List of actions.
-	 */
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
-	/**
-	 * Job reference getter.
-	 */
-	public Job getJob() {
-		return job;
-	}
-
-	/**
-	 * Job reference setter.
-	 * 
-	 * @param job
-	 *            job name
-	 */
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
-	//TODO Add annotation.
-	/**
-	 * Get the previous operation.
-	 */
-	public Operation getPrevious() {
-		return previous;
-	}
-
-	/**
-	 * Set the previous operation.
-	 * 
-	 * @param previous
-	 *            Reference to the previous operation.
-	 */
-	public void setPrevious(Operation previous) {
-		this.previous = previous;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Operation [name=" + name + ", actions=" + actions + "]";
 	}
 }
 
