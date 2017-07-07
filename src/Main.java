@@ -83,7 +83,7 @@ class WorkUnit {
 					if (job.getOperations().size() > 0) {
 						previous = job.getOperations().get(job.getOperations().size() - 1);
 					}
-					job.getOperations().add(new Operation(data[i][1].toString(), job, previous));
+					job.getOperations().add(new Operation(data[i][1].toString(), job, previous, null));
 					i++;
 				}
 			}
@@ -101,7 +101,7 @@ class WorkUnit {
 							previous = operation.getActions().get(operation.getActions().size() - 1);
 						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
-								operation, previous);
+								operation);
 						operation.getActions().add(action);
 						actions.add(action);
 					}

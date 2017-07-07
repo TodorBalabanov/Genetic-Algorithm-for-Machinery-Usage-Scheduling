@@ -29,17 +29,25 @@ class Operation {
 	private Operation previous = null;
 
 	/**
+	 * Is operation done flag.
+	 */
+	private Boolean done = null;
+
+	/**
 	 * Constructor with all parameters.
 	 * 
 	 * @param name
 	 *            Operation name.
 	 * @param job
 	 *            Job reference.
+	 * @param done
+	 *            Is operation done flag.
 	 */
-	public Operation(String name, Job job, Operation previous) {
+	public Operation(String name, Job job, Operation previous, Boolean done) {
 		this.name = name;
 		this.job = job;
 		this.previous = previous;
+		this.done = done;
 	}
 
 	/**
@@ -118,6 +126,26 @@ class Operation {
 		this.previous = previous;
 	}
 
+	/**
+	 * Is operation done flag getter.
+	 * 
+	 * @return Is done flag.
+	 */
+	public boolean getDone() {
+		// TODO Implement lazy initialization.
+		return isDone();
+	}
+
+	/**
+	 * Is operation done flag setter.
+	 * 
+	 * @param done
+	 *            Is done flag.
+	 */
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -126,5 +154,46 @@ class Operation {
 	@Override
 	public String toString() {
 		return "Operation [name=" + name + ", actions=" + actions + "]";
+	}
+
+	/**
+	 * Helper function to check is the operation done.
+	 * 
+	 * @return True if the operation is done, false otherwise.
+	 * 
+	 * @throws RuntimeException
+	 *             It is thrown if more than one machine was used for this
+	 *             operation.
+	 */
+	public boolean isDone() throws RuntimeException {
+		int counter = 0;
+
+		for (Action action : actions) {
+			if (action.isDone() == true) {
+				counter++;
+			}
+		}
+
+		switch (counter) {
+		case 0:
+			return false;
+		case 1:
+			return true;
+		default:
+			throw new RuntimeException("More than one machine was used for this operation and it is not correct!");
+		}
+	}
+
+	/**
+	 * Is previous operation done checker.
+	 * 
+	 * @return True if the previous operation was done, false otherwise.
+	 */
+	public boolean isPreviousDone() {
+		if (previous == null) {
+			return false;
+		} else {
+			return previous.isDone();
+		}
 	}
 }

@@ -35,11 +35,6 @@ class Action {
 	private Operation operation = null;
 
 	/**
-	 * Reference to the previous action.
-	 */
-	private Action previous = null;
-
-	/**
 	 * Constructor with all parameters,
 	 * 
 	 * @param start
@@ -54,18 +49,14 @@ class Action {
 	 *            Machine reference.
 	 * @param operation
 	 *            Operation reference.
-	 * @param previous
-	 *            Reference to the previous action.
 	 */
-	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation,
-			Action previous) {
+	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation) {
 		this.start = start;
 		this.duration = duration;
 		this.end = end;
 		this.done = done;
 		this.machine = machine;
 		this.operation = operation;
-		this.previous = previous;
 	}
 
 	/*
@@ -191,24 +182,5 @@ class Action {
 	 */
 	public void setOperation(Operation operation) {
 		this.operation = operation;
-	}
-
-	/**
-	 * Previous action reference getter.
-	 * 
-	 * @return The previous action reference.
-	 */
-	public Action getPrevious() {
-		return previous;
-	}
-
-	/**
-	 * Previous action reference setter.
-	 * 
-	 * @param previous
-	 *            Previous action reference.
-	 */
-	public void setPrevious(Action previous) {
-		this.previous = previous;
 	}
 }
