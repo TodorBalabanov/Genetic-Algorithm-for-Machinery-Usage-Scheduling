@@ -1,4 +1,5 @@
-package GAMU.Model;
+package eu.veldsoft.gamus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,10 +134,8 @@ class Operation {
 	 * @return Is done flag.
 	 */
 	public boolean getDone() {
-		if(done == null) {
-			done = isDone();
-		}
-		return done;
+		// TODO Implement lazy initialization.
+		return isDone();
 	}
 
 	/**

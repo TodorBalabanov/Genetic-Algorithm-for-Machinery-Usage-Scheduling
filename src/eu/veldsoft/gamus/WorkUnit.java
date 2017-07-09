@@ -1,4 +1,5 @@
-package GAMU.Model;
+package eu.veldsoft.gamus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

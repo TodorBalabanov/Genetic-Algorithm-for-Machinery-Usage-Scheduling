@@ -1,4 +1,5 @@
-package GAMU.Model;
+package eu.veldsoft.gamus;
+
 /**
  * Application single entry point class.
  * 

@@ -1,4 +1,5 @@
-package GAMU.Model;
+package eu.veldsoft.gamus;
+
 /**
  * Single action on a single machine.
  * 
