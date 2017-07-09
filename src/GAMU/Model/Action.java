@@ -1,3 +1,4 @@
+package GAMU.Model;
 /**
  * Single action on a single machine.
  * 

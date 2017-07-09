@@ -1,3 +1,4 @@
+package GAMU.Model;
 /**
  * Application single entry point class.
  * 

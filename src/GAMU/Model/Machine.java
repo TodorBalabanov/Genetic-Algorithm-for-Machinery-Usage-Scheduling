@@ -1,3 +1,4 @@
+package GAMU.Model;
 /**
  * Machine description.
  * 
