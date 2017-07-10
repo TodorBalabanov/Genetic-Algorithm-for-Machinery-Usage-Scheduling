@@ -33,7 +33,7 @@ class WorkUnit {
 	/**
 	 * Reference to data object for the problem to be solved.
 	 */
-	Object data[][] = null;
+	private Object data[][] = null;
 
 	/**
 	 * Constructor with all parameters.
@@ -141,21 +141,51 @@ class WorkUnit {
 	 * 
 	 * @param limit
 	 *            Limit discrete time for the simulation.
+	 * @return Counters with the problems found.
 	 */
-	public void simulate(int limit) {
+	public int[] simulate(int limit) {
+		/*
+		 * Count different problems found.
+		 */
+		int[] problems = new int[] { 0, 0, };
+
 		for (int time = 0; time < limit; time++) {
+			// System.out.print("=");
+
 			// TODO Do the simulation.
 			for (Action action : actions) {
 				/*
+				 * If any action in the operation list of actions is done we do
+				 * not need to calculate current loop iteration.
+				 */
+				if (action.getOperation().isDone() == true) {
+					continue;
+				}
+
+				/*
+				 * If current operation has predecessor and the predecessor is
+				 * not finished yet do not calculate the action.
+				 */
+				Operation previous = action.getOperation().getPrevious();
+				if (previous != null && previous.isDone() == false) {
+					continue;
+				}
+
+				/*
 				 * It is time the action to be done.
 				 */
-				if (action.getStart() == time && action.isDone() == false) {
+				if (action.getStart() == time && action.getDuration() > 0 && action.isDone() == false) {
 					if (action.getMachine().isOccupied() == false) {
+						/*
+						 * Do the action on the machine.
+						 */
 						action.getMachine().setOccupied(true);
 						action.getMachine().setAction(action);
 					} else {
-						// TODO Implement better reporting functionality.
-						System.err.println("Schedule collision for: " + action);
+						/*
+						 * Keep track of machine occupied times.
+						 */
+						problems[0]++;
 					}
 				}
 
@@ -168,11 +198,82 @@ class WorkUnit {
 						action.getMachine().setOccupied(false);
 						action.getMachine().setAction(null);
 					} else {
-						// TODO Implement better reporting functionality.
-						System.err.println("Schedule omission for: " + action);
+						/*
+						 * Keep track of unused machine times.
+						 */
+						problems[1]++;
 					}
 				}
 			}
 		}
+		// System.out.println();
+
+		return problems;
+	}
+
+	/**
+	 * Counting of unfinished operations.
+	 * 
+	 * @return Number of unfinished operation.
+	 */
+	public int numberOfUndoneOperations() {
+		int counter = 0;
+
+		for (Job job : jobs) {
+			for (Operation operation : job.getOperations()) {
+				if (operation.isDone() == false) {
+					counter++;
+				}
+			}
+		}
+
+		return counter;
+	}
+
+	/**
+	 * Report the result of the simulation.
+	 * 
+	 * @return Text with the report.
+	 */
+	public String report() {
+		String result = "";
+
+		for (Job job : jobs) {
+			result += job;
+			result += "\n";
+			for (Operation operation : job.getOperations()) {
+				result += "\t";
+				result += operation;
+				result += "\n";
+
+				result += "\t";
+				result += "\t";
+				result += operation.getActiveAction();
+				result += "\n";
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Total time used report.
+	 * 
+	 * @return Total time.
+	 */
+	public int totalTimeUsed() {
+		int total = 0;
+
+		for(Action action : actions) {
+			if(action.isDone() == false) {
+				continue;
+			}
+			
+			if(action.getEnd() > total) {
+				total = action.getEnd();
+			}
+		}
+		
+		return total;
 	}
 }

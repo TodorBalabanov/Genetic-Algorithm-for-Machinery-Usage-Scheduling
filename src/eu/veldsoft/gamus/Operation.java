@@ -148,16 +148,6 @@ class Operation {
 		this.done = done;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Operation [name=" + name + ", actions=" + actions + "]";
-	}
-
 	/**
 	 * Helper function to check is the operation done.
 	 * 
@@ -197,5 +187,34 @@ class Operation {
 		} else {
 			return previous.isDone();
 		}
+	}
+
+	/**
+	 * Provide the action used for this operation to complete.
+	 * 
+	 * @return Reference to the action.
+	 */
+	public Action getActiveAction() {
+		if (isDone() == false) {
+			return null;
+		}
+
+		for (Action action : actions) {
+			if (action.isDone() == true) {
+				return action;
+			}
+		}
+
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Operation [name=" + name + ", actions=" + actions + "]";
 	}
 }
