@@ -98,10 +98,6 @@ class WorkUnit {
 			for (Job job : jobs) {
 				for (Operation operation : job.getOperations()) {
 					for (int j = 2; j < data[i].length; j++) {
-						Action previous = null;
-						if (operation.getActions().size() > 0) {
-							previous = operation.getActions().get(operation.getActions().size() - 1);
-						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
 								operation);
 						operation.getActions().add(action);
@@ -239,17 +235,9 @@ class WorkUnit {
 		String result = "";
 
 		for (Job job : jobs) {
-			result += job;
-			result += "\n";
+			result += job + "\n";
 			for (Operation operation : job.getOperations()) {
-				result += "\t";
-				result += operation;
-				result += "\n";
-
-				result += "\t";
-				result += "\t";
-				result += operation.getActiveAction();
-				result += "\n";
+				result += "\t" + operation + "\n\t\t" + operation.getActiveAction() + "\n";
 			}
 		}
 
