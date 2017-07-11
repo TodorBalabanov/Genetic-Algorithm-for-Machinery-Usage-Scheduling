@@ -239,17 +239,9 @@ class WorkUnit {
 		String result = "";
 
 		for (Job job : jobs) {
-			result += job;
-			result += "\n";
+			result += job + "\n";
 			for (Operation operation : job.getOperations()) {
-				result += "\t";
-				result += operation;
-				result += "\n";
-
-				result += "\t";
-				result += "\t";
-				result += operation.getActiveAction();
-				result += "\n";
+				result += "\t" + operation + "\n\t\t" + operation.getActiveAction() + "\n";
 			}
 		}
 
