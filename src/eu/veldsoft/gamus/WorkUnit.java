@@ -36,6 +36,16 @@ class WorkUnit {
 	private Object data[][] = null;
 
 	/**
+	 * Clear all action times.
+	 */
+	private void clearTimes() {
+		for (Action action : actions) {
+			action.setStart(0);
+			action.setEnd(0);
+		}
+	}
+
+	/**
 	 * Constructor with all parameters.
 	 * 
 	 * @param data
@@ -98,6 +108,10 @@ class WorkUnit {
 			for (Job job : jobs) {
 				for (Operation operation : job.getOperations()) {
 					for (int j = 2; j < data[i].length; j++) {
+						Action previous = null;
+						if (operation.getActions().size() > 0) {
+							previous = operation.getActions().get(operation.getActions().size() - 1);
+						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
 								operation);
 						operation.getActions().add(action);
@@ -114,6 +128,27 @@ class WorkUnit {
 	}
 
 	/**
+	 * Generate random, but valid solution.
+	 * 
+	 * @return List of tasks as single valid solution.
+	 */
+	public List<Task> generateRandomValidSolution() {
+		List<Task> solution = new ArrayList<Task>();
+
+		int time = 0;
+		for (Job job : jobs) {
+			for (Operation operation : job.getOperations()) {
+				int index = PRNG.nextInt(operation.getActions().size());
+				Action action = operation.getActions().get(index);
+				solution.add(new Task(index, time));
+				time += action.getDuration();
+			}
+		}
+
+		return solution;
+	}
+
+	/**
 	 * Select random start times of all actions.
 	 * 
 	 * @param min
@@ -122,12 +157,35 @@ class WorkUnit {
 	 *            Maximum random value to be used.
 	 */
 	public void adjustRandomTimes(int min, int max) {
+		clearTimes();
+
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
 				for (Action action : operation.getActions()) {
 					action.setStart(min + PRNG.nextInt(max - min + 1));
 					action.setEnd(action.getStart() + action.getDuration());
 				}
+			}
+		}
+	}
+
+	/**
+	 * Select predefined start times of all actions.
+	 * 
+	 * @param tasks
+	 *            List of tasks to be loaded.
+	 */
+	public void adjustScheduleTimes(List<Task> tasks) {
+		clearTimes();
+
+		int t = 0;
+		for (Job job : jobs) {
+			for (Operation operation : job.getOperations()) {
+				Task task = tasks.get(t);
+				Action action = operation.getActions().get(task.getIndex());
+				action.setStart(task.getTime());
+				action.setEnd(action.getStart() + action.getDuration());
+				t++;
 			}
 		}
 	}
@@ -235,9 +293,17 @@ class WorkUnit {
 		String result = "";
 
 		for (Job job : jobs) {
-			result += job + "\n";
+			result += job;
+			result += "\n";
 			for (Operation operation : job.getOperations()) {
-				result += "\t" + operation + "\n\t\t" + operation.getActiveAction() + "\n";
+				result += "\t";
+				result += operation;
+				result += "\n";
+
+				result += "\t";
+				result += "\t";
+				result += operation.getActiveAction();
+				result += "\n";
 			}
 		}
 
