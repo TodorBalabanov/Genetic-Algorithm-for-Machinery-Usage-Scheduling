@@ -15,7 +15,6 @@ public class Main {
 	 *            Command line arguments.
 	 */
 	public static void main(String[] args) {
-		
 		DataParser parser = new DataParser(args[0]);
 		WorkUnit work = new WorkUnit(parser.parse()[5]);
 

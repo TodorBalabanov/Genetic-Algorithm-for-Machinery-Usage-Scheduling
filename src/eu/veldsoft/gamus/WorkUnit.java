@@ -264,16 +264,16 @@ class WorkUnit {
 	public int totalTimeUsed() {
 		int total = 0;
 
-		for(Action action : actions) {
-			if(action.isDone() == false) {
+		for (Action action : actions) {
+			if (action.isDone() == false) {
 				continue;
 			}
-			
-			if(action.getEnd() > total) {
+
+			if (action.getEnd() > total) {
 				total = action.getEnd();
 			}
 		}
-		
+
 		return total;
 	}
 }
