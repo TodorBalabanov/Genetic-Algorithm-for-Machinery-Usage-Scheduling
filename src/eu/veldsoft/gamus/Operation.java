@@ -30,10 +30,6 @@ class Operation {
 	 */
 	private Operation previous = null;
 
-	/**
-	 * Is operation done flag.
-	 */
-	private Boolean done = null;
 
 	/**
 	 * Constructor with all parameters.
