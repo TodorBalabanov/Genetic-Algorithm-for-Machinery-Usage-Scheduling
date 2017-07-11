@@ -108,10 +108,6 @@ class WorkUnit {
 			for (Job job : jobs) {
 				for (Operation operation : job.getOperations()) {
 					for (int j = 2; j < data[i].length; j++) {
-						Action previous = null;
-						if (operation.getActions().size() > 0) {
-							previous = operation.getActions().get(operation.getActions().size() - 1);
-						}
 						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
 								operation);
 						operation.getActions().add(action);
