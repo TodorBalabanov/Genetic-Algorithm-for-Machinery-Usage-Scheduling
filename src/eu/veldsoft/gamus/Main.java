@@ -1,7 +1,5 @@
 package eu.veldsoft.gamus;
 
-import java.util.Arrays;
-
 /**
  * Application single entry point class.
  * 
@@ -18,11 +16,12 @@ public class Main {
 		DataParser parser = new DataParser(args[0]);
 		WorkUnit work = new WorkUnit(parser.parse()[5]);
 
-		work.load();
-		work.adjustRandomTimes(100, 1000);
-		System.out.println(Arrays.toString(work.simulate(100000)));
-		System.out.println(work.numberOfUndoneOperations());
-		System.out.println(work.report());
-		System.out.println(work.totalTimeUsed());
+		// work.load();
+		// work.adjustRandomTimes(100, 1000);
+		// System.out.println(Arrays.toString(work.simulate(100000)));
+		// System.out.println(work.numberOfUndoneOperations());
+		// System.out.println(work.report());
+		// System.out.println(work.totalTimeUsed());
+
 	}
 }

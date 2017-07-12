@@ -4,7 +4,7 @@
 package eu.veldsoft.gamus;
 
 /**
- * Task is small piece in the decion vector.
+ * Task is small piece in the decision vector.
  * 
  * @author Todor Balabanov
  */

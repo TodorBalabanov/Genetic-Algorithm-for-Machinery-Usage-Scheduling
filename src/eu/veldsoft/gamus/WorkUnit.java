@@ -2,7 +2,6 @@ package eu.veldsoft.gamus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Single work unit consists of jobs.
@@ -10,11 +9,6 @@ import java.util.Random;
  * @author Todor Balabanov
  */
 class WorkUnit {
-	/**
-	 * Pseudo random number generator.
-	 */
-	private static final Random PRNG = new Random();
-
 	/**
 	 * List of the available machines.
 	 */
@@ -53,6 +47,15 @@ class WorkUnit {
 	 */
 	public WorkUnit(Object[][] data) {
 		this.data = data;
+	}
+
+	/**
+	 * Number of machines info.
+	 * 
+	 * @return Number of possible machines.
+	 */
+	public int numberOfMachines() {
+		return machines.size();
 	}
 
 	/**
@@ -134,7 +137,7 @@ class WorkUnit {
 		int time = 0;
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
-				int index = PRNG.nextInt(operation.getActions().size());
+				int index = Util.PRNG.nextInt(operation.getActions().size());
 				Action action = operation.getActions().get(index);
 				solution.add(new Task(index, time));
 				time += action.getDuration();
@@ -158,7 +161,7 @@ class WorkUnit {
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
 				for (Action action : operation.getActions()) {
-					action.setStart(min + PRNG.nextInt(max - min + 1));
+					action.setStart(min + Util.PRNG.nextInt(max - min + 1));
 					action.setEnd(action.getStart() + action.getDuration());
 				}
 			}
@@ -197,7 +200,7 @@ class WorkUnit {
 		/*
 		 * Count different problems found.
 		 */
-		int[] problems = new int[] { 0, 0, };
+		int[] counters = new int[] { 0, 0, 0, 0, };
 
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
@@ -235,7 +238,7 @@ class WorkUnit {
 						/*
 						 * Keep track of machine occupied times.
 						 */
-						problems[0]++;
+						counters[2]++;
 					}
 				}
 
@@ -251,14 +254,17 @@ class WorkUnit {
 						/*
 						 * Keep track of unused machine times.
 						 */
-						problems[1]++;
+						counters[3]++;
 					}
 				}
 			}
 		}
 		// System.out.println();
 
-		return problems;
+		counters[0] = totalTimeUsed();
+		counters[1] = numberOfUndoneOperations();
+
+		return counters;
 	}
 
 	/**
