@@ -208,6 +208,23 @@ class Operation {
 		return null;
 	}
 
+	/**
+	 * Maximum operation time getter.
+	 * 
+	 * @return Maximum time.
+	 */
+	public int getMaxDuration() {
+		int duration = 0;
+		int max = actions.get(0).getDuration();
+		for (Action action : actions) {
+			if ((duration = action.getDuration()) > max) {
+				max = duration;
+			}
+		}
+
+		return max;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -140,7 +140,7 @@ class WorkUnit {
 				int index = Util.PRNG.nextInt(operation.getActions().size());
 				Action action = operation.getActions().get(index);
 				solution.add(new Task(index, time));
-				time += action.getDuration();
+				time += operation.getMaxDuration() + 1;
 			}
 		}
 
@@ -189,6 +189,10 @@ class WorkUnit {
 		}
 	}
 
+	// public int[] simulate() {
+	// return simulte(limit);
+	// }
+
 	/**
 	 * Simulate work unit.
 	 * 
@@ -200,18 +204,40 @@ class WorkUnit {
 		/*
 		 * Count different problems found.
 		 */
-		int[] counters = new int[] { 0, 0, 0, 0, };
+		int[] counters = new int[] { 0, 0, 0, 0, 0 };
 
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
 
-			// TODO Do the simulation.
+			/*
+			 * Release all occupied machines for this moment in time.
+			 */
+			for (Action action : actions) {
+				if (action.getEnd() == time && action.isDone() == false && action.getMachine() != null) {
+					if (action.getMachine().isOccupied() == true) {
+						action.setDone(true);
+						action.getMachine().setOccupied(false);
+						action.getMachine().setAction(null);
+					} 
+				}
+			}
+
+			/*
+			 * 
+			 */
 			for (Action action : actions) {
 				/*
 				 * If any action in the operation list of actions is done we do
 				 * not need to calculate current loop iteration.
 				 */
 				if (action.getOperation().isDone() == true) {
+					continue;
+				}
+				
+				/*
+				 * Do not proceed if the action is not selected for this operation. 
+				 */
+				if(action.getEnd() == 0) {
 					continue;
 				}
 
@@ -221,13 +247,18 @@ class WorkUnit {
 				 */
 				Operation previous = action.getOperation().getPrevious();
 				if (previous != null && previous.isDone() == false) {
+					if (action.getStart() == time) {
+						counters[3]++;
+					}
+
 					continue;
 				}
 
 				/*
 				 * It is time the action to be done.
 				 */
-				if (action.getStart() == time && action.getDuration() > 0 && action.isDone() == false) {
+				if (action.getStart() == time && action.getEnd() != 0 && action.getDuration() > 0
+						&& action.isDone() == false) {
 					if (action.getMachine().isOccupied() == false) {
 						/*
 						 * Do the action on the machine.
@@ -239,22 +270,6 @@ class WorkUnit {
 						 * Keep track of machine occupied times.
 						 */
 						counters[2]++;
-					}
-				}
-
-				/*
-				 * It is time the action to be done.
-				 */
-				if (action.getEnd() == time) {
-					if (action.getMachine().isOccupied() == true) {
-						action.setDone(true);
-						action.getMachine().setOccupied(false);
-						action.getMachine().setAction(null);
-					} else {
-						/*
-						 * Keep track of unused machine times.
-						 */
-						counters[3]++;
 					}
 				}
 			}

@@ -88,7 +88,7 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 		// TODO Supply time limit by better way.
 		int counters[] = work.simulate(10000);
 
-		return counters[0] + 100 * counters[1] + 10 * counters[2] + 10 * counters[3];
+		return counters[0] + 100 * counters[1] + 10 * counters[2] + 10 * counters[3] + 10 * counters[4];
 		// return 1D / (counters[0] + 100*counters[1] + 10*counters[2] +
 		// 10*counters[3]);
 	}
