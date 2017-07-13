@@ -2,7 +2,6 @@ package eu.veldsoft.gamus;
 
 import java.util.List;
 
-import org.apache.commons.math3.exception.util.Localizable;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.genetics.AbstractListChromosome;
 import org.apache.commons.math3.genetics.InvalidRepresentationException;
@@ -90,15 +89,13 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 		// TODO Supply time limit by better way.
 		int counters[] = work.simulate(10000);
 
-		return counters[0] + 100 * counters[1] + 10 * counters[2] + 10 * counters[3] + 10 * counters[4];
-		// return 1D / (counters[0] + 100*counters[1] + 10*counters[2] +
-		// 10*counters[3]);
+		return 0.001 / (1 + counters[0]) + 0.1 / (1 + counters[1]) + 0.01 / (1 + counters[2])
+				+ 0.01 / (1 + counters[3]);
 	}
 
 	@Override
 	protected void checkValidity(List<Task> solution) throws InvalidRepresentationException {
 		if (solution.size() == 0) {
-			// TODO Rise solution vector is zero exception.
 			throw new InvalidRepresentationException(LocalizedFormats.DIMENSION, solution.size());
 		}
 	}

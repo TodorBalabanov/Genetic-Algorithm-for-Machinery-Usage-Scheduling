@@ -31,7 +31,8 @@ class RandomTaskMutation implements MutationPolicy {
 		/*
 		 * Mutate time.
 		 */
-		int time = task.getTime() + Util.PRNG.nextInt(3) - 1;
+		int time = task.getTime() + Util.PRNG.nextInt(21) - 10;
+		//TODO Find better way (for example as constructor parameter) to supply random range.
 		if (time < 0) {
 			time = 0;
 		}

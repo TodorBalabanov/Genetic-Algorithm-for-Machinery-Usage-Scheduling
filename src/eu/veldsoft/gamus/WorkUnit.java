@@ -203,7 +203,7 @@ class WorkUnit {
 		/*
 		 * Count different problems found.
 		 */
-		int[] counters = new int[] { 0, 0, 0, 0, 0 };
+		int[] counters = new int[] { 0, 0, 0, 0 };
 
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
@@ -217,7 +217,7 @@ class WorkUnit {
 						action.setDone(true);
 						action.getMachine().setOccupied(false);
 						action.getMachine().setAction(null);
-					} 
+					}
 				}
 			}
 
@@ -232,11 +232,12 @@ class WorkUnit {
 				if (action.getOperation().isDone() == true) {
 					continue;
 				}
-				
+
 				/*
-				 * Do not proceed if the action is not selected for this operation. 
+				 * Do not proceed if the action is not selected for this
+				 * operation.
 				 */
-				if(action.getEnd() == 0) {
+				if (action.getEnd() == 0) {
 					continue;
 				}
 

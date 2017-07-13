@@ -46,7 +46,7 @@ public class Main {
 	/**
 	 * Optimization time in seconds.
 	 */
-	static final long OPTIMIZATION_TIMEOUT_SECONDS = 30;
+	static final long OPTIMIZATION_TIMEOUT_SECONDS = 60;
 
 	/**
 	 * Single entry point method.
@@ -69,6 +69,7 @@ public class Main {
 		for (int i = 0; i < POPULATION_SIZE; i++) {
 			list.add(new TaskListChromosome(work.generateRandomValidSolution(), work));
 		}
+
 		Population initial = new ElitisticListPopulation(list, 2 * list.size(), ELITISM_RATE);
 
 		/*
