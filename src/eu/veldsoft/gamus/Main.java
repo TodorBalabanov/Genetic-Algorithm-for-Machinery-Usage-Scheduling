@@ -1,6 +1,5 @@
 package eu.veldsoft.gamus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -56,13 +55,12 @@ public class Main {
 	 *            Command line arguments.
 	 */
 	public static void main(String[] args) {
+		/*
+		 * Load data.
+		 */
 		DataParser parser = new DataParser(args[0]);
-		WorkUnit work = new WorkUnit(parser.parse()[5]);
-
-		// work.load();
-		// work.adjustScheduleTimes(work.generateRandomValidSolution());
-		// System.out.println(Arrays.toString(work.simulate(100000)));
-		// System.out.println(work.report());
+		WorkUnit work = new WorkUnit(parser.parse()[Integer.valueOf(args[1])]);
+		work.load();
 
 		/*
 		 * Generate initial population.
@@ -72,8 +70,6 @@ public class Main {
 			list.add(new TaskListChromosome(work.generateRandomValidSolution(), work));
 		}
 		Population initial = new ElitisticListPopulation(list, 2 * list.size(), ELITISM_RATE);
-
-		// TODO InstructionsCrossover class is needed.
 
 		/*
 		 * Initialize genetic algorithm.

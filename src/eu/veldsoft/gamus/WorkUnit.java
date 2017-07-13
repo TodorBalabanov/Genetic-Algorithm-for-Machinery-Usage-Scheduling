@@ -138,7 +138,6 @@ class WorkUnit {
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
 				int index = Util.PRNG.nextInt(operation.getActions().size());
-				Action action = operation.getActions().get(index);
 				solution.add(new Task(index, time));
 				time += operation.getMaxDuration() + 1;
 			}
