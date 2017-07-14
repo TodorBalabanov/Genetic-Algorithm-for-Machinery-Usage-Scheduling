@@ -9,12 +9,12 @@ import java.util.List;
  * @author Todor Balabanov
  */
 class Job {
+
 	/**
 	 * Job title.
 	 */
 	private String name = "";
 
-	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of operations taken for this job.
 	 */
@@ -77,4 +77,5 @@ class Job {
 	public String toString() {
 		return "Job [name=" + name + ", operations=" + operations + "]";
 	}
+
 }

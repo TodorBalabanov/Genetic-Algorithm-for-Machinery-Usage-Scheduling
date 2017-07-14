@@ -18,38 +18,13 @@ import org.apache.commons.math3.genetics.UniformCrossover;
  * @author Todor Balabanov
  */
 public class Main {
-	/**
-	 * Genetic algorithm population size.
-	 */
-	static final int POPULATION_SIZE = 37;
-
-	/**
-	 * Crossover probability.
-	 */
-	static final double CROSSOVER_RATE = 0.9;
-
-	/**
-	 * Mutation probability.
-	 */
-	static final double MUTATION_RATE = 0.03;
-
-	/**
-	 * Tournament arity.
-	 */
-	static final int TOURNAMENT_ARITY = 2;
-
-	/**
-	 * Rate of keeping the best found solutions.
-	 */
-	static final double ELITISM_RATE = 0.1;
-
-	/**
-	 * Optimization time in seconds.
-	 */
-	static final long OPTIMIZATION_TIMEOUT_SECONDS = 60;
 
 	/**
 	 * Single entry point method.
+	 * 
+	 * Run with the following command:
+	 * 
+	 * java Main ./dat/data05072017.xls 5 10000 60
 	 * 
 	 * @param args
 	 *            Command line arguments.
@@ -59,29 +34,29 @@ public class Main {
 		 * Load data.
 		 */
 		DataParser parser = new DataParser(args[0]);
-		WorkUnit work = new WorkUnit(parser.parse()[Integer.valueOf(args[1])]);
+		WorkUnit work = new WorkUnit(parser.parse()[Integer.valueOf(args[1])], Integer.valueOf(args[2]));
 		work.load();
 
 		/*
 		 * Generate initial population.
 		 */
 		List<Chromosome> list = new LinkedList<Chromosome>();
-		for (int i = 0; i < POPULATION_SIZE; i++) {
+		for (int i = 0; i < Util.DEFAULT_POPULATION_SIZE; i++) {
 			list.add(new TaskListChromosome(work.generateRandomValidSolution(), work));
 		}
-
-		Population initial = new ElitisticListPopulation(list, 2 * list.size(), ELITISM_RATE);
+		Population initial = new ElitisticListPopulation(list, 2 * list.size(), Util.DEFAULT_ELITISM_RATE);
 
 		/*
 		 * Initialize genetic algorithm.
 		 */
-		GeneticAlgorithm algorithm = new GeneticAlgorithm(new UniformCrossover<TaskListChromosome>(0.5), CROSSOVER_RATE,
-				new RandomTaskMutation(), MUTATION_RATE, new TournamentSelection(TOURNAMENT_ARITY));
+		GeneticAlgorithm algorithm = new GeneticAlgorithm(new UniformCrossover<TaskListChromosome>(0.5),
+				Util.DEFAULT_CROSSOVER_RATE, new RandomTaskMutation(-10, +10), Util.DEFAULT_MUTATION_RATE,
+				new TournamentSelection(Util.DEFAULT_TOURNAMENT_ARITY));
 
 		/*
 		 * Run optimization.
 		 */
-		Population optimized = algorithm.evolve(initial, new FixedElapsedTime(OPTIMIZATION_TIMEOUT_SECONDS));
+		Population optimized = algorithm.evolve(initial, new FixedElapsedTime(Integer.valueOf(args[3])));
 
 		/*
 		 * Obtain result.
@@ -92,7 +67,8 @@ public class Main {
 		 * Check result.
 		 */
 		work.adjustScheduleTimes(solution);
-		System.out.println(Arrays.toString(work.simulate(100000)));
+		System.out.println(Arrays.toString(work.simulate(Integer.valueOf(args[2]))));
 		System.out.println(work.report());
 	}
+
 }

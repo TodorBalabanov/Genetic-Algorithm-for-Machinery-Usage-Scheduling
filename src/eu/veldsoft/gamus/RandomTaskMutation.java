@@ -14,10 +14,43 @@ import org.apache.commons.math3.genetics.MutationPolicy;
 class RandomTaskMutation implements MutationPolicy {
 
 	/**
+	 * Mutation change minimum.
+	 */
+	private int min = 0;
+
+	/**
+	 * Mutation change maximum.
+	 */
+	private int max = 0;
+
+	/**
+	 * Constructor with all parameters.
+	 * 
+	 * @param min
+	 *            Mutation change minimum.
+	 * @param max
+	 *            Mutation change maximum.
+	 */
+	public RandomTaskMutation(int min, int max) {
+		super();
+
+		this.min = min;
+		this.max = max;
+	}
+
+	/**
 	 * Mutate random single task in the solution.
+	 * 
+	 * @param solution
+	 *            Chromosome before mutation to be applied.
+	 * 
+	 * @return Chromosome with applied mutation.
 	 */
 	@Override
 	public Chromosome mutate(Chromosome solution) throws MathIllegalArgumentException {
+		/*
+		 * Down casting should be always safe.
+		 */
 		if (solution instanceof TaskListChromosome == false) {
 			return solution;
 		}
@@ -31,8 +64,9 @@ class RandomTaskMutation implements MutationPolicy {
 		/*
 		 * Mutate time.
 		 */
-		int time = task.getTime() + Util.PRNG.nextInt(21) - 10;
-		//TODO Find better way (for example as constructor parameter) to supply random range.
+		int time = task.getTime() + min + Util.PRNG.nextInt(max - min + 1);
+		// TODO Find better way (for example as constructor parameter) to supply
+		// random range.
 		if (time < 0) {
 			time = 0;
 		}
@@ -45,4 +79,5 @@ class RandomTaskMutation implements MutationPolicy {
 
 		return new TaskListChromosome(tasks, true, ((TaskListChromosome) solution).getWork());
 	}
+
 }

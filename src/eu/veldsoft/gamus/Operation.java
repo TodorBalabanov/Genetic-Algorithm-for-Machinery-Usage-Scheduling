@@ -9,12 +9,12 @@ import java.util.List;
  * @author Todor Balabanov
  */
 class Operation {
+
 	/**
 	 * Operation title.
 	 */
 	private String name = "";
 
-	// TODO May be LinkedList is better choice for this member field.
 	/**
 	 * List of actions taken for this operation.
 	 */
@@ -234,4 +234,5 @@ class Operation {
 	public String toString() {
 		return "Operation [name=" + name + ", actions=" + actions + "]";
 	}
+
 }

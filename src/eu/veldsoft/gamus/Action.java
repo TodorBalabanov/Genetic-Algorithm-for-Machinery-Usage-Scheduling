@@ -6,6 +6,7 @@ package eu.veldsoft.gamus;
  * @author Todor Balabanov
  */
 class Action {
+
 	/**
 	 * Action start time.
 	 */
@@ -185,4 +186,5 @@ class Action {
 	public void setOperation(Operation operation) {
 		this.operation = operation;
 	}
+
 }

@@ -12,16 +12,21 @@ import org.apache.commons.math3.genetics.InvalidRepresentationException;
  * @author Todor Balabanov
  */
 class TaskListChromosome extends AbstractListChromosome<Task> {
+
 	/**
 	 * Reference to external object of work unit.
 	 */
 	private WorkUnit work = null;
 
 	/**
+	 * Constructor.
 	 * 
 	 * @param representation
+	 *            Solution vector.
 	 * @param copy
+	 *            Deep copy flag.
 	 * @param work
+	 *            Work unit reference.
 	 */
 	public TaskListChromosome(List<Task> representation, boolean copy, WorkUnit work) {
 		super(representation, copy);
@@ -29,10 +34,15 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	}
 
 	/**
+	 * Constructor.
 	 * 
 	 * @param representation
+	 *            Solution vector.
 	 * @param work
+	 *            Work unit reference.
+	 * 
 	 * @throws InvalidRepresentationException
+	 *             Invalid solution exception.
 	 */
 	public TaskListChromosome(Task[] representation, WorkUnit work) throws InvalidRepresentationException {
 		super(representation);
@@ -40,10 +50,15 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	}
 
 	/**
+	 * Constructor.
 	 * 
 	 * @param representation
+	 *            Solution vector.
 	 * @param work
+	 *            Work unit reference.
+	 * 
 	 * @throws InvalidRepresentationException
+	 *             Invalid solution exception.
 	 */
 	public TaskListChromosome(List<Task> representation, WorkUnit work) throws InvalidRepresentationException {
 		super(representation);
@@ -86,22 +101,43 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	 */
 	@Override
 	public double fitness() {
-		// TODO Supply time limit by better way.
-		int counters[] = work.simulate(10000);
+		int counters[] = work.simulate();
 
+		// TODO Better check for fitness calculation is needed.
 		return 0.001 / (1 + counters[0]) + 0.1 / (1 + counters[1]) + 0.01 / (1 + counters[2])
 				+ 0.01 / (1 + counters[3]);
 	}
 
+	/**
+	 * Solution validity check.
+	 * 
+	 * @param solution
+	 *            List of tasks.
+	 * 
+	 * @throws InvalidRepresentationException
+	 *             Invalid solution exception.
+	 */
 	@Override
 	protected void checkValidity(List<Task> solution) throws InvalidRepresentationException {
+		/*
+		 * List of tasks should not be empty.
+		 */
 		if (solution.size() == 0) {
 			throw new InvalidRepresentationException(LocalizedFormats.DIMENSION, solution.size());
 		}
 	}
 
+	/**
+	 * Chromosome generation by usage of solution vector.
+	 * 
+	 * @param solution
+	 *            List of tasks.
+	 * 
+	 * @return Newly generated chromosome.
+	 */
 	@Override
 	public AbstractListChromosome<Task> newFixedLengthChromosome(List<Task> solution) {
 		return new TaskListChromosome(work.generateRandomValidSolution(), false, work);
 	}
+
 }

@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  * @author Kristian Radkov
  */
 public class DataParser {
+
 	/**
 	 * Path to the file we need to open.
 	 */
@@ -96,4 +97,5 @@ public class DataParser {
 
 		return data;
 	}
+
 }

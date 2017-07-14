@@ -9,6 +9,7 @@ import java.util.List;
  * @author Todor Balabanov
  */
 class WorkUnit {
+
 	/**
 	 * List of the available machines.
 	 */
@@ -30,6 +31,11 @@ class WorkUnit {
 	private Object data[][] = null;
 
 	/**
+	 * Simulation default time limit.
+	 */
+	private int limit = 0;
+
+	/**
 	 * Clear all action times.
 	 */
 	private void clearTimes() {
@@ -44,9 +50,12 @@ class WorkUnit {
 	 * 
 	 * @param data
 	 *            Problem data object reference.
+	 * @param limit
+	 *            Simulation default time limit.
 	 */
-	public WorkUnit(Object[][] data) {
+	public WorkUnit(Object[][] data, int limit) {
 		this.data = data;
+		this.limit = limit;
 	}
 
 	/**
@@ -188,15 +197,12 @@ class WorkUnit {
 		}
 	}
 
-	// public int[] simulate() {
-	// return simulte(limit);
-	// }
-
 	/**
 	 * Simulate work unit.
 	 * 
 	 * @param limit
 	 *            Limit discrete time for the simulation.
+	 * 
 	 * @return Counters with the problems found.
 	 */
 	public int[] simulate(int limit) {
@@ -222,7 +228,7 @@ class WorkUnit {
 			}
 
 			/*
-			 * 
+			 * Run operations on the machines.
 			 */
 			for (Action action : actions) {
 				/*
@@ -280,6 +286,15 @@ class WorkUnit {
 		counters[1] = numberOfUndoneOperations();
 
 		return counters;
+	}
+
+	/**
+	 * Simulate work unit.
+	 * 
+	 * @return Counters with the problems found.
+	 */
+	public int[] simulate() {
+		return simulate(limit);
 	}
 
 	/**
@@ -347,4 +362,5 @@ class WorkUnit {
 
 		return total;
 	}
+
 }

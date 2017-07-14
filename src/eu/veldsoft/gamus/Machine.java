@@ -6,6 +6,7 @@ package eu.veldsoft.gamus;
  * @author Todor Balabanov
  */
 class Machine {
+
 	/**
 	 * Machine title.
 	 */
@@ -103,4 +104,5 @@ class Machine {
 	public String toString() {
 		return "Machine [name=" + name + ", occupied=" + occupied + "]";
 	}
+
 }

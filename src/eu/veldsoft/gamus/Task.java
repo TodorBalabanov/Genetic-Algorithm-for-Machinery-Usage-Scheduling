@@ -1,6 +1,3 @@
-/**
- * 
- */
 package eu.veldsoft.gamus;
 
 /**
@@ -9,6 +6,7 @@ package eu.veldsoft.gamus;
  * @author Todor Balabanov
  */
 class Task {
+
 	/**
 	 * Index of the machine to be used in this task.
 	 */
@@ -71,4 +69,5 @@ class Task {
 	public void setTime(int time) {
 		this.time = time;
 	}
+
 }
