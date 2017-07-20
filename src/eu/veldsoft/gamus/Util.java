@@ -42,6 +42,11 @@ class Util {
 	/**
 	 * Optimization time in seconds.
 	 */
-	static final long DEFAULT_OPTIMIZATION_TIMEOUT_SECONDS = 60;
+	static final int DEFAULT_OPTIMIZATION_TIMEOUT_SECONDS = 1 * 60;
+
+	/**
+	 * Simulation time out in discrete time steps.
+	 */
+	public static final int DEFAULT_SIMULATION_TIMEOUT = 1000;
 
 }

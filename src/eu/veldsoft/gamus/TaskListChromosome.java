@@ -104,8 +104,8 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 		int counters[] = work.simulate();
 
 		// TODO Better check for fitness calculation is needed.
-		return 0.001 / (1 + counters[0]) + 0.1 / (1 + counters[1]) + 0.01 / (1 + counters[2])
-				+ 0.01 / (1 + counters[3]);
+		return +(0.001 / (1 + counters[0]) + 0.1 / (1 + counters[1]) + 0.01 / (1 + counters[2])
+				+ 0.01 / (1 + counters[3]));
 	}
 
 	/**
