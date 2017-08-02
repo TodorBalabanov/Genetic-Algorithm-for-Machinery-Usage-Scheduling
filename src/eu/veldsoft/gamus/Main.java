@@ -86,9 +86,12 @@ public class Main {
 	/**
 	 * Single entry point method.
 	 * 
-	 * Run with the following command:
+	 * Run with the following commands:
 	 * 
 	 * java Main -fn./dat/data05072017.xls -ds5
+	 * 
+	 * java -cp .:../lib/commons-math3-3.6.1.jar:../lib/poi-3.16.jar
+	 * eu.veldsoft.gamus.Main -fn../dat/data05072017.xls -ds5
 	 * 
 	 * @param args
 	 *            Command line arguments.
