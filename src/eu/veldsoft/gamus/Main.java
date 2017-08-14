@@ -275,7 +275,7 @@ public class Main {
 		 * Check result.
 		 */
 		work.adjustScheduleTimes(solution);
-		System.out.println(Arrays.toString(work.simulate(simulationTimeout)));
+		System.out.println(Arrays.deepToString(work.simulate(simulationTimeout)));
 		System.out.println(work.report());
 	}
 

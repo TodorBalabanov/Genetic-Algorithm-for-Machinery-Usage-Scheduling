@@ -103,11 +103,14 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	public double fitness() {
 		work.reset();
 		work.adjustScheduleTimes(getSolution());
-		int counters[] = work.simulate();
+		double counters[][] = work.simulate();
 
-		// TODO Better check for fitness calculation is needed.
-		return +(0.001 / (1 + counters[0]) + 0.1 / (1 + counters[1]) + 0.01 / (1 + counters[2])
-				+ 0.01 / (1 + counters[3]));
+		double value = 0;
+		for (int i = 0; i < counters[0].length && i < counters[1].length; i++) {
+			value += counters[0][i] * counters[1][i];
+		}
+
+		return value;
 	}
 
 	/**

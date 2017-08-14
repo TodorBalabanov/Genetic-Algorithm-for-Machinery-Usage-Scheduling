@@ -143,7 +143,6 @@ class WorkUnit {
 		for (Machine machine : machines) {
 			machine.reset();
 		}
-
 		for (Action action : actions) {
 			action.reset();
 		}
@@ -219,13 +218,13 @@ class WorkUnit {
 	 * 
 	 * @return Counters with the problems found.
 	 */
-	public int[] simulate(int limit) {
+	public double[][] simulate(int limit) {
 		/*
-		 * Count different problems found.
+		 * Count different problems found. Second array is for coefficients for
+		 * the importance of the problem.
 		 */
-		int[] counters = new int[] { 0, 0, 0, 0 };
+		double[][] counters = { { 0, 0, 0, 0 }, { -0.001, -0.010, -0.010, -0.010 }, };
 
-		System.err.println(actions);
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
 
@@ -300,7 +299,7 @@ class WorkUnit {
 					 * finished.
 					 */
 					if (action.getStart() == time) {
-						counters[3]++;
+						counters[0][3]++;
 					}
 
 					continue;
@@ -341,7 +340,7 @@ class WorkUnit {
 					/*
 					 * Keep track of machine occupied times.
 					 */
-					counters[2]++;
+					counters[0][2]++;
 
 					continue;
 				}
@@ -355,13 +354,9 @@ class WorkUnit {
 		}
 		// System.out.println();
 
-		counters[0] = totalTimeUsed();
-		counters[1] = numberOfUndoneOperations();
+		counters[0][0] = totalTimeUsed();
+		counters[0][1] = numberOfUndoneOperations();
 
-		System.err.println(actions);
-		System.err.println(Arrays.toString(counters));
-		if (true)
-			throw new RuntimeException("Test point 1 ...");
 		return counters;
 	}
 
@@ -370,7 +365,7 @@ class WorkUnit {
 	 * 
 	 * @return Counters with the problems found.
 	 */
-	public int[] simulate() {
+	public double[][] simulate() {
 		return simulate(limit);
 	}
 
