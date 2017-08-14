@@ -70,4 +70,14 @@ class Task {
 		this.time = time;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Task [index=" + index + ", time=" + time + "]";
+	}
+
 }

@@ -101,6 +101,8 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	 */
 	@Override
 	public double fitness() {
+		work.reset();
+		work.adjustScheduleTimes(getSolution());
 		int counters[] = work.simulate();
 
 		// TODO Better check for fitness calculation is needed.

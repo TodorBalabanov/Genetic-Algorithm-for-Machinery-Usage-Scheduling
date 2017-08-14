@@ -1,6 +1,7 @@
 package eu.veldsoft.gamus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -136,6 +137,19 @@ class WorkUnit {
 	}
 
 	/**
+	 * Reset all internal structures.
+	 */
+	public void reset() {
+		for (Machine machine : machines) {
+			machine.reset();
+		}
+
+		for (Action action : actions) {
+			action.reset();
+		}
+	}
+
+	/**
 	 * Generate random, but valid solution.
 	 * 
 	 * @return List of tasks as single valid solution.
@@ -211,6 +225,7 @@ class WorkUnit {
 		 */
 		int[] counters = new int[] { 0, 0, 0, 0 };
 
+		System.err.println(actions);
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
 
@@ -218,13 +233,40 @@ class WorkUnit {
 			 * Release all occupied machines for this moment in time.
 			 */
 			for (Action action : actions) {
-				if (action.getEnd() == time && action.isDone() == false && action.getMachine() != null) {
-					if (action.getMachine().isOccupied() == true) {
-						action.setDone(true);
-						action.getMachine().setOccupied(false);
-						action.getMachine().setAction(null);
-					}
+				/*
+				 * It is not time for release.
+				 */
+				if (action.getEnd() != time) {
+					continue;
 				}
+
+				/*
+				 * There is no machine to be released.
+				 */
+				if (action.getMachine() == null) {
+					continue;
+				}
+
+				/*
+				 * Machine was released already.
+				 */
+				if (action.getMachine().isOccupied() == false) {
+					continue;
+				}
+
+				/*
+				 * Machine was released already.
+				 */
+				if (action.isDone() == true) {
+					continue;
+				}
+
+				/*
+				 * Machine release.
+				 */
+				action.setDone(true);
+				action.getMachine().setOccupied(false);
+				action.getMachine().setAction(null);
 			}
 
 			/*
@@ -253,6 +295,10 @@ class WorkUnit {
 				 */
 				Operation previous = action.getOperation().getPrevious();
 				if (previous != null && previous.isDone() == false) {
+					/*
+					 * Operation can not start if the previous operation is not
+					 * finished.
+					 */
 					if (action.getStart() == time) {
 						counters[3]++;
 					}
@@ -261,23 +307,50 @@ class WorkUnit {
 				}
 
 				/*
-				 * It is time the action to be done.
+				 * It is not time to start.
 				 */
-				if (action.getStart() == time && action.getEnd() != 0 && action.getDuration() > 0
-						&& action.isDone() == false) {
-					if (action.getMachine().isOccupied() == false) {
-						/*
-						 * Do the action on the machine.
-						 */
-						action.getMachine().setOccupied(true);
-						action.getMachine().setAction(action);
-					} else {
-						/*
-						 * Keep track of machine occupied times.
-						 */
-						counters[2]++;
-					}
+				if (action.getStart() != time) {
+					continue;
 				}
+
+				/*
+				 * This action is not going to be used.
+				 */
+				if (action.getEnd() == 0) {
+					continue;
+				}
+
+				/*
+				 * Operation duration should be positive integer number.
+				 */
+				if (action.getDuration() <= 0) {
+					continue;
+				}
+
+				/*
+				 * If the action is done already there is nothing to be started.
+				 */
+				if (action.isDone() == true) {
+					continue;
+				}
+
+				/*
+				 * It is a problem if the machine is occupied.
+				 */
+				if (action.getMachine().isOccupied() == true) {
+					/*
+					 * Keep track of machine occupied times.
+					 */
+					counters[2]++;
+
+					continue;
+				}
+
+				/*
+				 * Do the action on the machine.
+				 */
+				action.getMachine().setOccupied(true);
+				action.getMachine().setAction(action);
 			}
 		}
 		// System.out.println();
@@ -285,6 +358,10 @@ class WorkUnit {
 		counters[0] = totalTimeUsed();
 		counters[1] = numberOfUndoneOperations();
 
+		System.err.println(actions);
+		System.err.println(Arrays.toString(counters));
+		if (true)
+			throw new RuntimeException("Test point 1 ...");
 		return counters;
 	}
 

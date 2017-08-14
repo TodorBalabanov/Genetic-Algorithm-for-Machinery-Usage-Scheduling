@@ -187,4 +187,12 @@ class Action {
 		this.operation = operation;
 	}
 
+	/**
+	 * Reset action internal state.
+	 */
+	public void reset() {
+		done = false;
+		start = 0;
+		end = 0;
+	}
 }

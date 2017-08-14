@@ -95,6 +95,14 @@ class Machine {
 		this.action = action;
 	}
 
+	/**
+	 * Return machine in the initial state.
+	 */
+	public void reset() {
+		occupied = false;
+		action = null;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
