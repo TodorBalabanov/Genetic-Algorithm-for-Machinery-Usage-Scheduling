@@ -107,7 +107,7 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 
 		double value = 0;
 		for (int i = 0; i < counters[0].length && i < counters[1].length; i++) {
-			value += counters[0][i] * counters[1][i];
+			value += (1+counters[0][i]) * counters[1][i];
 		}
 
 		return value;

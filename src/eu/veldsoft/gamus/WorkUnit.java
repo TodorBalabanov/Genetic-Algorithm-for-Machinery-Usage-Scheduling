@@ -223,8 +223,7 @@ class WorkUnit {
 		 * Count different problems found. Second array is for coefficients for
 		 * the importance of the problem.
 		 */
-		double[][] counters = { { 0, 0, 0, 0 }, { -0.001, -0.010, -0.010, -0.010 }, };
-
+		double[][] counters = { { 0, 0, 0, 0 }, { -1, -100, -100, -100 }, };
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
 
@@ -354,8 +353,26 @@ class WorkUnit {
 		}
 		// System.out.println();
 
+		/*
+		 * The bigger fitness is for better chromosome. It means that if it
+		 * takes too much time it is not good.
+		 */
 		counters[0][0] = totalTimeUsed();
+
+		/*
+		 * There should be operations which are not done.
+		 */
 		counters[0][1] = numberOfUndoneOperations();
+
+		/*
+		 * Machine should not collide.
+		 */
+		counters[0][2] = counters[0][2];
+
+		/*
+		 * Operations should run in strict order.
+		 */
+		counters[0][3] = counters[0][3];
 
 		return counters;
 	}
