@@ -25,6 +25,25 @@ import net.sourceforge.jswarm_pso.Swarm;
 public class Main {
 
 	/**
+	 * Types of optimization methods.
+	 * 
+	 * @author Todor Balabanov
+	 */
+	private static enum Method {
+		GA, PSO
+	};
+
+	/**
+	 * Optimization method to be used.
+	 */
+	private static Method method = Method.GA;
+
+	/**
+	 * Number of particles in particle swarm optimization.
+	 */
+	private static int numberOfParticles = Swarm.DEFAULT_NUMBER_OF_PARTICLES;
+
+	/**
 	 * Population size.
 	 */
 	private static int populationSize = Util.DEFAULT_POPULATION_SIZE;
@@ -124,7 +143,7 @@ public class Main {
 	private static List<Task> pso(final WorkUnit work) {
 		// TODO Size of the particle should be calculated and fitness function should be
 		// described.
-		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new Particle(work.getActions().size()) {
+		Swarm swarm = new Swarm(numberOfParticles, new Particle(work.getActions().size()) {
 		}, new FitnessFunction() {
 			@Override
 			public double evaluate(double[] position) {
@@ -175,10 +194,16 @@ public class Main {
 		/*
 		 * Obtain solution.
 		 */
-		swarm.getBestParticle().getBestPosition();
-
-		// TODO It is not clear how to encode machine index.
-		return null;
+		double position[] = swarm.getBestParticle().getBestPosition();
+		List<Action> actions = work.getActions();
+		List<Task> tasks = new ArrayList<Task>();
+		for (int i = 0; i < position.length; i++) {
+			/*
+			 * Mathematical round-up or round-down is done.
+			 */
+			tasks.add(new Task(actions.get(i).getIndex(), (int) (position[i] + 0.5)));
+		}
+		return tasks;
 	}
 
 	/**
@@ -223,6 +248,9 @@ public class Main {
 		System.out.println("*******************************************************************************");
 		System.out.println("*                                                                             *");
 		System.out.println("* -help           Help screen.                                                *");
+		System.out.println("*                                                                             *");
+		System.out.println("* -ga             Genetic algorithm optimization (default).                   *");
+		System.out.println("* -pso            Particle swarm optimization.                                *");
 		System.out.println("*                                                                             *");
 		System.out.println("* -fn<string>     Input file path and name.                                   *");
 		System.out.println("* -ds<integer>    Data sheet index (start from 0).                            *");
@@ -274,11 +302,20 @@ public class Main {
 		 * Parse command line arguments.
 		 */
 		for (int a = 0; a < args.length; a++) {
+			if (args.length > 0 && args[a].contains("-ga")) {
+				method = Method.GA;
+			}
+
+			if (args.length > 0 && args[a].contains("-pso")) {
+				method = Method.PSO;
+			}
+
 			if (args.length > 0 && args[a].contains("-ps")) {
 				String parameter = args[a].substring(3);
 
 				try {
 					populationSize = Integer.valueOf(parameter);
+					numberOfParticles = Integer.valueOf(parameter);
 				} catch (Exception exception) {
 				}
 			}
@@ -406,8 +443,15 @@ public class Main {
 		/*
 		 * Obtain result.
 		 */
-		List<Task> solution = ga(work);
-		// List<Task> solution = pso(work);
+		List<Task> solution = new ArrayList<Task>();
+		switch (method) {
+		case GA:
+			solution = ga(work);
+			break;
+		case PSO:
+			solution = pso(work);
+			break;
+		}
 
 		/*
 		 * Check result.

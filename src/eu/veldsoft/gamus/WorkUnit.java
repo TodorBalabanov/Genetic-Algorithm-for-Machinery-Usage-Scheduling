@@ -68,6 +68,21 @@ class WorkUnit {
 	}
 
 	/**
+	 * Sum of all operations durations.
+	 * 
+	 * @return Sum of maximum operations durations.
+	 */
+	public int sumOfDurations() {
+		int sum = 0;
+
+		for (Action action : actions) {
+			sum += action.getDuration();
+		}
+
+		return sum;
+	}
+
+	/**
 	 * Number of machines info.
 	 * 
 	 * @return Number of possible machines.

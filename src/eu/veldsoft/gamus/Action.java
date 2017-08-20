@@ -212,5 +212,5 @@ class Action {
 		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
 				+ machine + "]";
 	}
-	
+
 }
