@@ -20,6 +20,107 @@ import org.apache.commons.math3.genetics.UniformCrossover;
 public class Main {
 
 	/**
+	 * Population size.
+	 */
+	private static int populationSize = Util.DEFAULT_POPULATION_SIZE;
+
+	/**
+	 * Crossover rate.
+	 */
+	private static double crossoverRate = Util.DEFAULT_CROSSOVER_RATE;
+
+	/**
+	 * Mutation rate.
+	 */
+	private static double mutationRate = Util.DEFAULT_MUTATION_RATE;
+
+	/**
+	 * Tournament arity.
+	 */
+	private static int tournamentArity = Util.DEFAULT_TOURNAMENT_ARITY;
+
+	/**
+	 * Elitism rate.
+	 */
+	private static double elitismRate = Util.DEFAULT_ELITISM_RATE;
+
+	/**
+	 * Optimization timeout in seconds.
+	 */
+	private static int optimizationTimeout = Util.DEFAULT_OPTIMIZATION_TIMEOUT_SECONDS;
+
+	/**
+	 * Simulation timeout in discrete time steps.
+	 */
+	private static int simulationTimeout = Util.DEFAULT_SIMULATION_TIMEOUT;
+
+	/**
+	 * Low boundary for random mutation of single time component.
+	 */
+	private static int lowMutationBoundary = -1;
+
+	/**
+	 * High boundary for random mutation of single time component.
+	 */
+	private static int highMutationBoundary = +1;
+
+	/**
+	 * Input data file name with exact path.
+	 */
+	private static String fileName = "";
+
+	/**
+	 * Index in the data sheet to be used as input.
+	 */
+	private static int dataSheet = -1;
+
+	/**
+	 * Genetic algorithm global optimization.
+	 * 
+	 * @param work
+	 *            Work unit to be optimized.
+	 * @return Solution found.
+	 */
+	private static List<Task> ga(WorkUnit work) {
+		/*
+		 * Generate initial population.
+		 */
+		List<Chromosome> list = new LinkedList<Chromosome>();
+		for (int i = 0; i < populationSize; i++) {
+			list.add(new TaskListChromosome(work.generateRandomValidSolution(), work));
+		}
+		Population initial = new ElitisticListPopulation(list, 2 * list.size(), elitismRate);
+
+		/*
+		 * Initialize genetic algorithm.
+		 */
+		GeneticAlgorithm algorithm = new GeneticAlgorithm(new UniformCrossover<TaskListChromosome>(0.5), crossoverRate,
+				new RandomTaskMutation(lowMutationBoundary, highMutationBoundary), mutationRate,
+				new TournamentSelection(tournamentArity));
+
+		/*
+		 * Run optimization.
+		 */
+		Population optimized = algorithm.evolve(initial, new FixedElapsedTime(optimizationTimeout));
+
+		/*
+		 * Obtain result.
+		 */
+		return ((TaskListChromosome) optimized.getFittestChromosome()).getSolution();
+	}
+
+	/**
+	 * Particle swarm optimization global optimization.
+	 * 
+	 * @param work
+	 *            Work unit to be optimized.
+	 * @return Solution found.
+	 */
+	private static List<Task> pso(WorkUnit work) {
+		return null;
+	}
+
+	/**
 	 * Print simulation execution command.
 	 *
 	 * @param args
@@ -70,15 +171,16 @@ public class Main {
 		System.out.println("* -mr<deciaml>    Mutation rate (between 0.0 and 1.0).                        *");
 		System.out.println("* -tr<integer>    Tournament arity (should be more than 2).                   *");
 		System.out.println("* -er<deciaml>    Elitism rate (between 0.0 and 1.0).                         *");
-		System.out.println("* -lm<integer>    Low boudary for random start time mutation.                 *");
-		System.out.println("* -hm<integer>    High boudary for random start time mutation.                *");
+		System.out.println("* -lm<integer>    Low boudary for random start time mutation (default -1).    *");
+		System.out.println("* -hm<integer>    High boudary for random start time mutation (default +1).   *");
 		System.out.println("*                                                                             *");
-		System.out.println("* -ot<integer>    Optimization time in seconds.                               *");
-		System.out.println("* -st<integer>    Simulation time in discrete time steps.                     *");
+		System.out.println("* -ot<integer>    Optimization time in seconds (default 60).                  *");
+		System.out.println("* -st<integer>    Simulation time in discrete time steps (default 1000).      *");
 		System.out.println("*                                                                             *");
 		System.out.println("*******************************************************************************");
 		System.out.println("*                                                                             *");
-		System.out.println("* Example:        java Main -fn./dat/data05072017.xls -ds5                    *");
+		System.out.println("* Examples:       java Main -help                                             *");
+		System.out.println("*                 java Main -fn./dat/data05072017.xls -ds5                    *");
 		System.out.println("*                                                                             *");
 		System.out.println("*******************************************************************************");
 	}
@@ -90,8 +192,15 @@ public class Main {
 	 * 
 	 * java Main -fn./dat/data05072017.xls -ds5
 	 * 
-	 * java -cp .:../lib/commons-math3-3.6.1.jar:../lib/poi-3.16.jar
+	 * java -cp
+	 * .:../lib/commons-math3-3.6.1.jar:../lib/poi-3.16.jar:../lib/jswarm-pso-2-08.jar
 	 * eu.veldsoft.gamus.Main -fn../dat/data05072017.xls -ds5
+	 * 
+	 * java -cp .;./commons-math3-3.6.1.jar;./poi-3.16.jar;jswarm-pso-2-08.jar
+	 * eu.veldsoft.gamus.Main -help
+	 * 
+	 * java -cp .;./commons-math3-3.6.1.jar;./poi-3.16.jar;jswarm-pso-2-08.jar
+	 * eu.veldsoft.gamus.Main -fn./data05072017.xls -ds5
 	 * 
 	 * @param args
 	 *            Command line arguments.
@@ -99,18 +208,6 @@ public class Main {
 	public static void main(String[] args) {
 		printExecuteCommand(args);
 		System.out.println();
-
-		int populationSize = Util.DEFAULT_POPULATION_SIZE;
-		double crossoverRate = Util.DEFAULT_CROSSOVER_RATE;
-		double mutationRate = Util.DEFAULT_MUTATION_RATE;
-		int tournamentArity = Util.DEFAULT_TOURNAMENT_ARITY;
-		double elitismRate = Util.DEFAULT_ELITISM_RATE;
-		int optimizationTimeout = Util.DEFAULT_OPTIMIZATION_TIMEOUT_SECONDS;
-		int simulationTimeout = Util.DEFAULT_SIMULATION_TIMEOUT;
-		String fileName = "";
-		int dataSheet = -1;
-		int lowMutationBoundary = -1;
-		int highMutationBoundary = +1;
 
 		/*
 		 * Parse command line arguments.
@@ -246,30 +343,10 @@ public class Main {
 		work.load();
 
 		/*
-		 * Generate initial population.
-		 */
-		List<Chromosome> list = new LinkedList<Chromosome>();
-		for (int i = 0; i < populationSize; i++) {
-			list.add(new TaskListChromosome(work.generateRandomValidSolution(), work));
-		}
-		Population initial = new ElitisticListPopulation(list, 2 * list.size(), elitismRate);
-
-		/*
-		 * Initialize genetic algorithm.
-		 */
-		GeneticAlgorithm algorithm = new GeneticAlgorithm(new UniformCrossover<TaskListChromosome>(0.5), crossoverRate,
-				new RandomTaskMutation(lowMutationBoundary, highMutationBoundary), mutationRate,
-				new TournamentSelection(tournamentArity));
-
-		/*
-		 * Run optimization.
-		 */
-		Population optimized = algorithm.evolve(initial, new FixedElapsedTime(optimizationTimeout));
-
-		/*
 		 * Obtain result.
 		 */
-		List<Task> solution = ((TaskListChromosome) optimized.getFittestChromosome()).getSolution();
+		List<Task> solution = ga(work);
+		// List<Task> solution = pso(work);
 
 		/*
 		 * Check result.
