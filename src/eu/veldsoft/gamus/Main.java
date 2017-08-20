@@ -14,7 +14,6 @@ import org.apache.commons.math3.genetics.TournamentSelection;
 import org.apache.commons.math3.genetics.UniformCrossover;
 
 import net.sourceforge.jswarm_pso.FitnessFunction;
-import net.sourceforge.jswarm_pso.Particle;
 import net.sourceforge.jswarm_pso.Swarm;
 
 /**
@@ -141,10 +140,9 @@ public class Main {
 	 * @return Solution found.
 	 */
 	private static List<Task> pso(final WorkUnit work) {
-		// TODO Size of the particle should be calculated and fitness function should be
-		// described.
-		Swarm swarm = new Swarm(numberOfParticles, new Particle(work.getActions().size()) {
-		}, new FitnessFunction() {
+		// TODO Size of the particle should be calculated and fitness function
+		// should be described.
+		Swarm swarm = new Swarm(numberOfParticles, new TaskParticle(work.getActions().size()), new FitnessFunction() {
 			@Override
 			public double evaluate(double[] position) {
 				/*
@@ -282,8 +280,8 @@ public class Main {
 	 * java Main -fn./dat/data05072017.xls -ds5
 	 * 
 	 * java -cp
-	 * .:../lib/commons-math3-3.6.1.jar:../lib/poi-3.16.jar:../lib/jswarm-pso-2-08.jar
-	 * eu.veldsoft.gamus.Main -fn../dat/data05072017.xls -ds5
+	 * .:../lib/commons-math3-3.6.1.jar:../lib/poi-3.16.jar:../lib/jswarm-pso-2-
+	 * 08.jar eu.veldsoft.gamus.Main -fn../dat/data05072017.xls -ds5
 	 * 
 	 * java -cp .;./commons-math3-3.6.1.jar;./poi-3.16.jar;jswarm-pso-2-08.jar
 	 * eu.veldsoft.gamus.Main -help
