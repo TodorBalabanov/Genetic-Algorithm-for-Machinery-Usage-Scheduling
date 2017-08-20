@@ -8,6 +8,11 @@ package eu.veldsoft.gamus;
 class Action {
 
 	/**
+	 * Action index to point place in the list of operation indexes.
+	 */
+	private int index = -1;
+
+	/**
 	 * Action start time.
 	 */
 	private int start = 0;
@@ -40,6 +45,8 @@ class Action {
 	/**
 	 * Constructor with all parameters,
 	 * 
+	 * @param index
+	 *            Action index in operation list of actions.
 	 * @param start
 	 *            Action start time.
 	 * @param duration
@@ -53,7 +60,8 @@ class Action {
 	 * @param operation
 	 *            Operation reference.
 	 */
-	public Action(int start, int duration, int end, boolean done, Machine machine, Operation operation) {
+	public Action(int index, int start, int duration, int end, boolean done, Machine machine, Operation operation) {
+		this.index = index;
 		this.start = start;
 		this.duration = duration;
 		this.end = end;
@@ -62,15 +70,13 @@ class Action {
 		this.operation = operation;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Action index getter.
 	 * 
-	 * @see java.lang.Object#toString()
+	 * @return Index of the action in the operation list of actions.
 	 */
-	@Override
-	public String toString() {
-		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
-				+ machine + "]";
+	public int getIndex() {
+		return index;
 	}
 
 	/**
@@ -195,4 +201,16 @@ class Action {
 		start = 0;
 		end = 0;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Action [start=" + start + ", duration=" + duration + ", end=" + end + ", done=" + done + ", machine="
+				+ machine + "]";
+	}
+	
 }

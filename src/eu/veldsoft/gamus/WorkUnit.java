@@ -59,6 +59,15 @@ class WorkUnit {
 	}
 
 	/**
+	 * List of actions getter.
+	 * 
+	 * @return List of actions.
+	 */
+	public List<Action> getActions() {
+		return actions;
+	}
+
+	/**
 	 * Number of machines info.
 	 * 
 	 * @return Number of possible machines.
@@ -119,9 +128,9 @@ class WorkUnit {
 			int i = 1;
 			for (Job job : jobs) {
 				for (Operation operation : job.getOperations()) {
-					for (int j = 2; j < data[i].length; j++) {
-						Action action = new Action(0, ((Integer) data[i][j]).intValue(), 0, false, machines.get(j - 2),
-								operation);
+					for (int j = 2, index = 0; j < data[i].length; j++, index++) {
+						Action action = new Action(index, 0, ((Integer) data[i][j]).intValue(), 0, false,
+								machines.get(j - 2), operation);
 						operation.getActions().add(action);
 						actions.add(action);
 					}
@@ -155,10 +164,18 @@ class WorkUnit {
 	public List<Task> generateRandomValidSolution() {
 		List<Task> solution = new ArrayList<Task>();
 
+		int index;
 		int time = 0;
 		for (Job job : jobs) {
 			for (Operation operation : job.getOperations()) {
-				int index = Util.PRNG.nextInt(operation.getActions().size());
+				do {
+					// TODO If all actions are with zero duration it will be an infinite loop.
+					index = Util.PRNG.nextInt(operation.getActions().size());
+				} while (operation.getActions().get(index).getDuration() == 0);
+
+				/*
+				 * Only machines which can be used are selected.
+				 */
 				solution.add(new Task(index, time));
 				time += operation.getMaxDuration() + 1;
 			}
@@ -219,8 +236,8 @@ class WorkUnit {
 	 */
 	public double[][] simulate(int limit) {
 		/*
-		 * Count different problems found. Second array is for coefficients for
-		 * the importance of the problem.
+		 * Count different problems found. Second array is for coefficients for the
+		 * importance of the problem.
 		 */
 		double[][] counters = { { 0, 0, 0, 0 }, { -1, -100, -100, -100 }, };
 		for (int time = 0; time < limit; time++) {
@@ -271,35 +288,32 @@ class WorkUnit {
 			 */
 			for (Action action : actions) {
 				/*
-				 * If any action in the operation list of actions is done we do
-				 * not need to calculate current loop iteration.
+				 * If any action in the operation list of actions is done we do not need to
+				 * calculate current loop iteration.
 				 */
 				if (action.getOperation().isDone() == true) {
 					continue;
 				}
 
 				/*
-				 * Do not proceed if the action is not selected for this
-				 * operation.
+				 * If the action is done already there is nothing to be started.
+				 */
+				if (action.isDone() == true) {
+					continue;
+				}
+
+				/*
+				 * Do not proceed if the action is not selected for this operation.
 				 */
 				if (action.getEnd() == 0) {
 					continue;
 				}
 
 				/*
-				 * If current operation has predecessor and the predecessor is
-				 * not finished yet do not calculate the action.
+				 * Do not proceed if the action is not possible for this operation. Operation
+				 * duration should be positive integer number.
 				 */
-				Operation previous = action.getOperation().getPrevious();
-				if (previous != null && previous.isDone() == false) {
-					/*
-					 * Operation can not start if the previous operation is not
-					 * finished.
-					 */
-					if (action.getStart() == time) {
-						counters[0][3]++;
-					}
-
+				if (action.getDuration() <= 0) {
 					continue;
 				}
 
@@ -311,23 +325,18 @@ class WorkUnit {
 				}
 
 				/*
-				 * This action is not going to be used.
+				 * If current operation has predecessor and the predecessor is not finished yet
+				 * do not calculate the action.
 				 */
-				if (action.getEnd() == 0) {
-					continue;
-				}
+				Operation previous = action.getOperation().getPrevious();
+				if (previous != null && previous.isDone() == false) {
+					/*
+					 * Operation can not start if the previous operation is not finished.
+					 */
+					if (action.getStart() == time) {
+						counters[0][3]++;
+					}
 
-				/*
-				 * Operation duration should be positive integer number.
-				 */
-				if (action.getDuration() <= 0) {
-					continue;
-				}
-
-				/*
-				 * If the action is done already there is nothing to be started.
-				 */
-				if (action.isDone() == true) {
 					continue;
 				}
 
@@ -353,8 +362,8 @@ class WorkUnit {
 		// System.out.println();
 
 		/*
-		 * The bigger fitness is for better chromosome. It means that if it
-		 * takes too much time it is not good.
+		 * The bigger fitness is for better chromosome. It means that if it takes too
+		 * much time it is not good.
 		 */
 		counters[0][0] = totalTimeUsed();
 

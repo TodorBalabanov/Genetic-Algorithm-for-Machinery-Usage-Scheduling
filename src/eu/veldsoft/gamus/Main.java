@@ -1,5 +1,6 @@
 package eu.veldsoft.gamus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,10 @@ import org.apache.commons.math3.genetics.GeneticAlgorithm;
 import org.apache.commons.math3.genetics.Population;
 import org.apache.commons.math3.genetics.TournamentSelection;
 import org.apache.commons.math3.genetics.UniformCrossover;
+
+import net.sourceforge.jswarm_pso.FitnessFunction;
+import net.sourceforge.jswarm_pso.Particle;
+import net.sourceforge.jswarm_pso.Swarm;
 
 /**
  * Application single entry point class.
@@ -116,7 +121,63 @@ public class Main {
 	 *            Work unit to be optimized.
 	 * @return Solution found.
 	 */
-	private static List<Task> pso(WorkUnit work) {
+	private static List<Task> pso(final WorkUnit work) {
+		// TODO Size of the particle should be calculated and fitness function should be
+		// described.
+		Swarm swarm = new Swarm(Swarm.DEFAULT_NUMBER_OF_PARTICLES, new Particle(work.getActions().size()) {
+		}, new FitnessFunction() {
+			@Override
+			public double evaluate(double[] position) {
+				/*
+				 * Prepare list of tasks in order to simulate the solution.
+				 */
+				List<Action> actions = work.getActions();
+				List<Task> tasks = new ArrayList<Task>();
+				for (int i = 0; i < position.length; i++) {
+					/*
+					 * Random integer round-up or round-down is done.
+					 */
+					tasks.add(new Task(actions.get(i).getIndex(), (int) (position[i] + Math.random())));
+				}
+
+				/*
+				 * Reset and run simulation.
+				 */
+				work.reset();
+				work.adjustScheduleTimes(tasks);
+				double counters[][] = work.simulate();
+
+				/*
+				 * Calculate fitness value.
+				 */
+				double value = 0;
+				for (int i = 0; i < counters[0].length && i < counters[1].length; i++) {
+					value += (1 + counters[0][i]) * counters[1][i];
+				}
+				return value;
+			}
+		});
+
+		/*
+		 * Set space constraints.
+		 */
+		swarm.setMaxPosition(simulationTimeout);
+		swarm.setMinPosition(0);
+
+		/*
+		 * Optimization.
+		 */
+		long finish = System.currentTimeMillis() + optimizationTimeout * 1000;
+		while (System.currentTimeMillis() < finish) {
+			swarm.evolve();
+		}
+
+		/*
+		 * Obtain solution.
+		 */
+		swarm.getBestParticle().getBestPosition();
+
+		// TODO It is not clear how to encode machine index.
 		return null;
 	}
 
