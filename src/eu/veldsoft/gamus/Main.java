@@ -162,6 +162,7 @@ public class Main {
 				 */
 				work.reset();
 				work.adjustScheduleTimes(tasks);
+				work.filterOnlyEarliest();
 				double counters[][] = work.simulate();
 
 				/*
@@ -445,16 +446,20 @@ public class Main {
 		switch (method) {
 		case GA:
 			solution = ga(work);
+			work.reset();
+			work.adjustScheduleTimes(solution);
 			break;
 		case PSO:
 			solution = pso(work);
+			work.reset();
+			work.adjustScheduleTimes(solution);
+			work.filterOnlyEarliest();
 			break;
 		}
 
 		/*
-		 * Check result.
+		 * Report result.
 		 */
-		work.adjustScheduleTimes(solution);
 		System.out.println(Arrays.deepToString(work.simulate(simulationTimeout)));
 		System.out.println(work.report());
 	}
