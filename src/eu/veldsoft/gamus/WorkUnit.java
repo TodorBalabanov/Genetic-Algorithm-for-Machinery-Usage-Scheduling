@@ -1,6 +1,7 @@
 package eu.veldsoft.gamus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -243,8 +244,8 @@ class WorkUnit {
 	}
 
 	/**
-	 * Filter only the earliest actions for each operation when particular
-	 * action is not selected by optimization method.
+	 * Filter only the earliest actions for each operation when particular action is
+	 * not selected by optimization method.
 	 */
 	public void filterOnlyEarliest() {
 		for (Job job : jobs) {
@@ -277,8 +278,7 @@ class WorkUnit {
 				}
 
 				/*
-				 * Set end time only for the action which will be used for
-				 * current operation.
+				 * Set end time only for the action which will be used for current operation.
 				 */
 				for (Action action : operation.getActions()) {
 					/*
@@ -305,8 +305,8 @@ class WorkUnit {
 	 */
 	public double[][] simulate(int limit) {
 		/*
-		 * Count different problems found. Second array is for coefficients for
-		 * the importance of the problem.
+		 * Count different problems found. Second array is for coefficients for the
+		 * importance of the problem.
 		 */
 		double[][] counters = { { 0, 0, 0, 0 }, { -1, -100, -100, -100 }, };
 		for (int time = 0; time < limit; time++) {
@@ -357,8 +357,8 @@ class WorkUnit {
 			 */
 			for (Action action : actions) {
 				/*
-				 * If any action in the operation list of actions is done we do
-				 * not need to calculate current loop iteration.
+				 * If any action in the operation list of actions is done we do not need to
+				 * calculate current loop iteration.
 				 */
 				if (action.getOperation().isDone() == true) {
 					continue;
@@ -372,17 +372,15 @@ class WorkUnit {
 				}
 
 				/*
-				 * Do not proceed if the action is not selected for this
-				 * operation.
+				 * Do not proceed if the action is not selected for this operation.
 				 */
 				if (action.getEnd() == 0) {
 					continue;
 				}
 
 				/*
-				 * Do not proceed if the action is not possible for this
-				 * operation. Operation duration should be positive integer
-				 * number.
+				 * Do not proceed if the action is not possible for this operation. Operation
+				 * duration should be positive integer number.
 				 */
 				if (action.getDuration() <= 0) {
 					continue;
@@ -396,14 +394,13 @@ class WorkUnit {
 				}
 
 				/*
-				 * If current operation has predecessor and the predecessor is
-				 * not finished yet do not calculate the action.
+				 * If current operation has predecessor and the predecessor is not finished yet
+				 * do not calculate the action.
 				 */
 				Operation previous = action.getOperation().getPrevious();
 				if (previous != null && previous.isDone() == false) {
 					/*
-					 * Operation can not start if the previous operation is not
-					 * finished.
+					 * Operation can not start if the previous operation is not finished.
 					 */
 					if (action.getStart() == time) {
 						counters[0][3]++;
@@ -434,8 +431,8 @@ class WorkUnit {
 		// System.out.println();
 
 		/*
-		 * The bigger fitness is for better chromosome. It means that if it
-		 * takes too much time it is not good.
+		 * The bigger fitness is for better chromosome. It means that if it takes too
+		 * much time it is not good.
 		 */
 		counters[0][0] = totalTimeUsed();
 
@@ -530,6 +527,17 @@ class WorkUnit {
 		}
 
 		return total;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "WorkUnit [machines=" + machines + ", jobs=" + jobs + ", actions=" + actions + ", data="
+				+ Arrays.deepToString(data) + ", limit=" + limit + "]";
 	}
 
 }
