@@ -308,7 +308,7 @@ class WorkUnit {
 		 * Count different problems found. Second array is for coefficients for the
 		 * importance of the problem.
 		 */
-		double[][] counters = { { 0, 0, 0, 0 }, { -1, -1, -1, -1 }, };
+		double[][] counters = { { 0, 0, 0, 0 }, { -0.00001, -0.01, -0.01, -0.01 }, };
 		for (int time = 0; time < limit; time++) {
 			// System.out.print("=");
 
@@ -440,19 +440,19 @@ class WorkUnit {
 		 * There should be operations which are not done.
 		 */
 		counters[0][1] = numberOfUndoneOperations();
-		counters[0][1] = (counters[0][1] <= 0 ? 0 : Math.log(counters[0][1]));
+		counters[0][1] = (counters[0][1] <= 0 ? 0 : Math.log(counters[0][1] + Math.random()));
 
 		/*
 		 * Machine should not collide.
 		 */
 		counters[0][2] = counters[0][2];
-		counters[0][2] = (counters[0][2] <= 0 ? 0 : Math.log(counters[0][2]));
+		counters[0][2] = (counters[0][2] <= 0 ? 0 : Math.log(counters[0][2] + Math.random()));
 
 		/*
 		 * Operations should run in strict order.
 		 */
 		counters[0][3] = counters[0][3];
-		counters[0][3] = (counters[0][3] <= 0 ? 0 : Math.log(counters[0][3]));
+		counters[0][3] = (counters[0][3] <= 0 ? 0 : Math.log(counters[0][3] + Math.random()));
 
 		return counters;
 	}
