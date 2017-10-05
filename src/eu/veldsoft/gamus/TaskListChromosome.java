@@ -103,6 +103,7 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 	public double fitness() {
 		work.reset();
 		work.adjustScheduleTimes(getSolution());
+		//TODO Obtain maximum simulation time from the schedule.
 		double counters[][] = work.simulate();
 
 		double value = 0;
