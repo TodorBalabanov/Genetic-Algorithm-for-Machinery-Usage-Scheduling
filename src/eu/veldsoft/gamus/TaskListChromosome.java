@@ -106,6 +106,7 @@ class TaskListChromosome extends AbstractListChromosome<Task> {
 		//TODO Obtain maximum simulation time from the schedule.
 		double counters[][] = work.simulate();
 
+		//TODO Fix schedule with random search if it has invalid properties.
 		double value = 0;
 		for (int i = 0; i < counters[0].length && i < counters[1].length; i++) {
 			value += (1 + counters[0][i]) * counters[1][i];
